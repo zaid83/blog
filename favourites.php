@@ -1,5 +1,9 @@
 <?php
-require('models/database.php');
+
+require('libraries/database.php');
+require('libraries/utils.php');
+
+$pdo = getPdo();
 session_start();
 
 if (isset($_GET['id']) && !empty($_GET['id'])) {

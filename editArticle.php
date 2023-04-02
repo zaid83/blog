@@ -1,6 +1,10 @@
 <?php
 
-require('models/database.php');
+
+require('libraries/database.php');
+require('libraries/utils.php');
+
+$pdo = getPdo();
 session_start();
 
 $article_id = null;

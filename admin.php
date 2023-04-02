@@ -1,5 +1,9 @@
 <?php
-require('models/database.php');
+
+require('libraries/database.php');
+require('libraries/utils.php');
+
+$pdo = getPdo();
 session_start();
 
 //tous les articles
@@ -38,10 +42,9 @@ $nbComs = $nbComs->rowCount();
 $pageTitle = "Administrateur";
 $subheading = "Controle Admin";
 
-ob_start();
-require('templates/login/admin.html.php');
-$pageContent = ob_get_clean();
-
-require('templates/layout.html.php');
+renderHTML(
+    'templates/login/admin.html',
+    compact('articles')
+);
 
 ?>

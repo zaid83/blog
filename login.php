@@ -1,5 +1,8 @@
 <?php
-require_once("models/database.php");
+require_once("libraries/database.php");
+require_once("libraries/utils.php");
+
+$pdo = getPdo();
 $message = "";
 if (!empty($_POST['email']) && !empty($_POST['password'])) {
     $email = $_POST['email'];
@@ -23,7 +26,7 @@ if (!empty($_POST['email']) && !empty($_POST['password'])) {
             $_SESSION['avatar'] = $res['avatar'];
             $_SESSION['token'] = $res['token'];
             $_SESSION['role'] = $res['role_user'];
-            header("Location:index.php");
+            redirect('index.php');
         } else {
             $message = "Mot de passe invalide";
         }
@@ -34,12 +37,10 @@ if (!empty($_POST['email']) && !empty($_POST['password'])) {
 
 
 $pageTitle = "Connexion";
-ob_start();
-require('templates/login/login.html.php');
-$pageContent = ob_get_clean();
 
-
-
-require('templates/layout.html.php');
+renderHTML(
+    'templates/login/login.html',
+    compact('message', 'pageTitle')
+);
 
 ?>

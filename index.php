@@ -1,28 +1,25 @@
 <?php
 session_start();
 
-require('models/database.php');
+require_once('libraries/database.php');
+require_once('libraries/utils.php');
 
+$pdo = getPdo();
+
+//SELECT ALL VALID ARTICLES
 $resultats = $pdo->query("SELECT * from articles JOIN users ON users.id = articles.author WHERE valid = 1 ORDER BY date_article DESC");
 $articles = $resultats->fetchAll();
+
+// RENDER PAGE
 if ($articles) {
-
-
     $pageTitle = "Accueil";
-
-    ob_start();
-    require('templates/index.html.php');
-    $pageContent = ob_get_clean();
-
-    require('templates/layout.html.php');
+    renderHTML(
+        'templates/index.html',
+        compact('articles')
+    );
 
 } else {
-    $error = "Pas d'articles à valider";
-    ob_start();
-    require('noArticles.php');
-
-    $pageContent = ob_get_clean();
-    require('templates/layout.html.php');
+    renderHTML('noArticles');
 }
 
 

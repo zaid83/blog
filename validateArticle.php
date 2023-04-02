@@ -1,7 +1,11 @@
 <?php
 session_start();
 
-require('models/database.php');
+
+require('libraries/database.php');
+require('libraries/utils.php');
+
+$pdo = getPdo();
 
 $resultats = $pdo->query("SELECT * from articles JOIN users ON users.id = articles.author WHERE valid = 3");
 

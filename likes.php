@@ -1,6 +1,10 @@
 <?php
 
-require('models/database.php');
+
+require('libraries/database.php');
+require('libraries/utils.php');
+
+$pdo = getPdo();
 session_start();
 if (isset($_GET['type'], $_GET['id']) and !empty($_GET['type']) and !empty($_GET['id'])) {
     $getid = (int) $_GET['id'];

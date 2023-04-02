@@ -1,7 +1,11 @@
 <?php
 session_start();
 
-require('models/database.php');
+
+require('libraries/database.php');
+require('libraries/utils.php');
+
+$pdo = getPdo();
 $sessionid = $_SESSION['id'];
 $resultats = $pdo->prepare("SELECT * from articles INNER JOIN states s ON s.id_valid = articles.valid  WHERE author = ? ORDER BY date_article DESC");
 $resultats->execute([$sessionid]);

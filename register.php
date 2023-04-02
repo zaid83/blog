@@ -1,8 +1,10 @@
 <?php
 
 
-require('models/database.php');
+require('libraries/database.php');
+require('libraries/utils.php');
 
+$pdo = getPdo();
 $message = '';
 
 if (isset($_POST["pseudo"]) && isset($_POST["email"])) {
@@ -73,15 +75,4 @@ if (isset($_POST["pseudo"]) && isset($_POST["email"])) {
     }
 }
 
-
-
-
-
-$pageTitle = "Inscription";
-ob_start();
-require('templates/login/register.html.php');
-$pageContent = ob_get_clean();
-
-
-
-require('templates/layout.html.php');
+renderHTML('templates/login/register.html', compact('message'));
