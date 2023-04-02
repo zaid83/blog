@@ -1,7 +1,7 @@
 <!-- Navigation-->
 <nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
     <div class="container px-4 px-lg-5">
-        <a class="navbar-brand" href="index.html"> MANGAZ</a>
+        <a class="navbar-brand" href="index.php"> MANGAZ</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
             aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             Menu
@@ -18,19 +18,31 @@
                         </li>
                     <?php } ?>
                     <?php if (isset($_SESSION['id'])) { ?>
+                        <li class=" nav-item dropdown">
+                            <a class="nav-link px-lg-3 py-3 py-lg-4 dropdown-toggle" href="#" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                Articles
+                            </a>
 
-                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="postArticle.php">Nouvelle
-                                Article</a>
+                            <ul class="dropdown-menu">
+                                <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="postArticle.php">Nouvelle
+                                        Article</a>
+                                </li>
+                                <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="mesArticles.php">Mes
+                                        Articles</a>
+                                </li>
+                                <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="myfavourites.php">Mes
+                                        Favoris</a>
+                                </li>
+                                <?php if (isset($_SESSION['id']) && $_SESSION['role'] > 1) { ?>
+                                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="validateArticle.php">Valider
+                                            Article</a>
+                                    </li>
+                                <?php } ?>
+
+                            </ul>
                         </li>
-                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="mesArticles.php">Mes Articles</a>
-                        </li>
-                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="myfavourites.php">Mes Favoris</a>
-                        </li>
-                        <?php if (isset($_SESSION['id']) && $_SESSION['role'] > 1) { ?>
-                            <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="validateArticle.php">Valider
-                                    Article</a>
-                            </li>
-                        <?php } ?>
+
 
                         <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4"
                                 href="profil.php?id=<?= $_SESSION['id'] ?>">

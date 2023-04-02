@@ -17,7 +17,7 @@ if ($articles) {
     require('templates/layout.html.php');
 
 } else {
-    $error = "Pas d'articles";
+    $error = "Pas d'articles à valider";
     ob_start();
     require('noArticles.php');
 

@@ -14,6 +14,7 @@ if ($articles) {
     ob_start();
     require('templates/articles/validateArticle.html.php');
     $pageContent = ob_get_clean();
+    require('templates/layout.html.php');
 
 } else {
     $error = "Pas d'articles en favoris";

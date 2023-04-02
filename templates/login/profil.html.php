@@ -40,11 +40,33 @@
                 <input name="avatar" class="form-control" type="text" value="<?= $user['avatar'] ?>">
             </div>
         </div>
+        <?php if (isset($_SESSION['id']) && $_SESSION['role'] == 3) { ?>
+            <div class="row">
+                <div class="col-md-6 col-sm-6 col-lg-6">
+
+                    <label for="role">Choisissez votre rôle</label>
+
+                    <select name="role" class="form-select" id="role-select">
+                        <?php foreach ($allroles as $allrole): ?>
+                            <option value="<?= $allrole['id_role'] ?>"><?= $allrole['nom_role'] ?></option>
+                        <?php endforeach ?>
+                    </select>
+
+                </div>
+            </div>
+        <?php } ?>
         <hr>
         <div class="row">
-            <div class="col-md-6 col-sm-6 col-xs-6 col-lg-6">
-                <button class="btn btn-default logbutton" type="submit" name="submit">Mettre à jour</button>
-            </div>
+            <?php if (isset($_SESSION['id']) && $_SESSION['role'] < 3) { ?>
+                <div class="col-md-6 col-sm-6 col-xs-6 col-lg-6">
+                    <button class="btn btn-default logbutton" type="submit" name="submit">Mettre à jour</button>
+                </div>
+            <?php } ?>
+            <?php if (isset($_SESSION['id']) && $_SESSION['role'] == 3) { ?>
+                <div class="col-md-6 col-sm-6 col-xs-6 col-lg-6">
+                    <button class="btn btn-default logbutton" type="submit" name="submitAdmin">Mettre à jour</button>
+                </div>
+            <?php } ?>
             <p style='color:white;'>
                 <?= $message; ?>
 

@@ -1,6 +1,5 @@
 <?php
-require('models/database.php');
-
+require_once("models/database.php");
 $message = "";
 if (!empty($_POST['email']) && !empty($_POST['password'])) {
     $email = $_POST['email'];
@@ -12,9 +11,10 @@ if (!empty($_POST['email']) && !empty($_POST['password'])) {
     $res = $login->fetch(PDO::FETCH_ASSOC);
 
     if ($res) {
+
         $passwordHash = $res['password'];
         if (password_verify($password, $passwordHash)) {
-            echo "Connexion réussie !";
+
             session_start();
 
             $_SESSION['id'] = $res['id'];
@@ -22,10 +22,10 @@ if (!empty($_POST['email']) && !empty($_POST['password'])) {
             $_SESSION['email'] = $res['email'];
             $_SESSION['avatar'] = $res['avatar'];
             $_SESSION['token'] = $res['token'];
-            $_SESSION['role'] = $res['role'];
+            $_SESSION['role'] = $res['role_user'];
             header("Location:index.php");
         } else {
-            $message = "Identifiants invalides";
+            $message = "Mot de passe invalide";
         }
     } else {
         $message = "Identifiants invalides";

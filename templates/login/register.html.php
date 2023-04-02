@@ -19,6 +19,13 @@
                 <input name="password" class="form-control" type="password" value=''>
             </div>
         </div>
+
+        <div class="row">
+            <div class="col-md-4 col-sm-4 col-lg-4">
+                <label for="password2">RETAPER VOTRE PASSWORD</label>
+                <input name="password2" class="form-control" type="password" value=''>
+            </div>
+        </div>
         <hr>
         <div class="row">
             <div class="col-md-6 col-sm-6 col-xs-6 col-lg-6">
