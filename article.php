@@ -31,6 +31,7 @@ $dislikes = $pdo->prepare('SELECT id_article FROM dislike WHERE id_article = ?')
 $dislikes->execute(array($article['id_article']));
 $dislikes = $dislikes->rowCount();
 
+if(isset($_SESSION['id'])){
 //Voir si l'article est liké
 $check_like = $pdo->prepare('SELECT id_article FROM like_article WHERE id_article = ? AND id_user = ?');
 $check_like->execute(array($article_id, $_SESSION['id']));
@@ -43,6 +44,7 @@ $check_dislike->execute(array($article_id, $_SESSION['id']));
 $checkfav = $pdo->prepare('SELECT id_article FROM favourites WHERE id_user = ? AND id_article = ?');
 $checkfav->execute(array($_SESSION['id'], $article_id));
 
+}
 
 $pageTitle = $article['title'];
 ob_start();
