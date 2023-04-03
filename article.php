@@ -28,16 +28,23 @@ $dislikes->execute(array($article['id_article']));
 $dislikes = $dislikes->rowCount();
 
 //Voir si l'article est liké
+if(isset($_SESSION['id'])){
 $check_like = $pdo->prepare('SELECT id_article FROM like_article WHERE id_article = ? AND id_user = ?');
 $check_like->execute(array($article_id, $_SESSION['id']));
 
+
 //Voir si l'article est non liké
+
 $check_dislike = $pdo->prepare('SELECT id_article FROM dislike WHERE id_article = ? AND id_user = ?');
 $check_dislike->execute(array($article_id, $_SESSION['id']));
+
 
 //Voir si l'article est en favori
 $checkfav = $pdo->prepare('SELECT id_article FROM favourites WHERE id_user = ? AND id_article = ?');
 $checkfav->execute(array($_SESSION['id'], $article_id));
+
+}
+
 
 
 $pageTitle = $article['title'];

@@ -18,7 +18,9 @@
                     <?= $article['date_article'] ?>
                 </span><br>
                 <span class="meta">
-                    <?php if ($check_like->rowCount() == 1) { ?>
+                    <?php 
+                    if(isset($_SESSION['id'])){
+                    if ($check_like->rowCount() == 1) { ?>
                         <a href="likes.php?type=1&id=<?= $article['id_article'] ?>"><i style="color:red" class="fa fa-heart"
                                 aria-hidden="true"></i>
                             J'aime </a>
@@ -44,7 +46,7 @@
                             <a href="favourites.php?id=<?= $article['id_article'] ?>"><i style="color:green"
                                     class="fa fa-plus" aria-hidden="true"></i>
                                 <span style="color:green">Ajouter aux favoris</span>
-                            <?php } ?>
+                            <?php }  ?>
 
                         </a>
                         <span><i class="fa fa-thumbs-up count"></i>
@@ -54,6 +56,7 @@
                             <?= $dislikes ?>
                         </span>
                 </span>
+                <?php } ?>
             </div>
         </div>
     </div>
