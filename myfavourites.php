@@ -15,19 +15,13 @@ if ($articles) {
     $subheading = "Liste de mes favoris";
     $pageTitle2 = "Liste de mes favoris";
     $pageFav = true;
-    ob_start();
-    require('templates/articles/validateArticle.html.php');
-    $pageContent = ob_get_clean();
-    require('templates/layout.html.php');
 
-} else {
-    $error = "Pas d'articles en favoris";
-    ob_start();
-    require('noArticles.php');
+    
+    renderHTML('templates/articles/myfavourites.html',
+    compact('pageTitle','subheading', 'pageTitle2', 'pageFav', 'articles'));
 
-    $pageContent = ob_get_clean();
-    require('templates/layout.html.php');
+}else {
+    renderHTML('noArticles');
 }
 
 
-?>

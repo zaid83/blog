@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.2
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Hôte : 127.0.0.1:3306
--- Généré le :  lun. 03 avr. 2023 à 05:44
--- Version du serveur :  10.4.10-MariaDB
--- Version de PHP :  7.4.0
+-- Hôte : 127.0.0.1
+-- Généré le : lun. 03 avr. 2023 à 16:46
+-- Version du serveur : 10.4.27-MariaDB
+-- Version de PHP : 8.2.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -19,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de données :  `blog`
+-- Base de données : `blog`
 --
 
 -- --------------------------------------------------------
@@ -28,20 +27,16 @@ SET time_zone = "+00:00";
 -- Structure de la table `articles`
 --
 
-DROP TABLE IF EXISTS `articles`;
-CREATE TABLE IF NOT EXISTS `articles` (
-  `id_article` int(11) NOT NULL AUTO_INCREMENT,
-  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `img_article` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `content` text COLLATE utf8mb4_unicode_ci NOT NULL,
+CREATE TABLE `articles` (
+  `id_article` int(11) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `img_article` varchar(255) NOT NULL,
+  `content` text NOT NULL,
   `date_article` datetime NOT NULL,
   `author` int(11) NOT NULL,
   `valid` int(11) NOT NULL DEFAULT 3,
-  `Signalements` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  PRIMARY KEY (`id_article`),
-  KEY `author` (`author`),
-  KEY `valid` (`valid`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `Signalements` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Déchargement des données de la table `articles`
@@ -58,17 +53,13 @@ INSERT INTO `articles` (`id_article`, `title`, `img_article`, `content`, `date_a
 -- Structure de la table `comments`
 --
 
-DROP TABLE IF EXISTS `comments`;
-CREATE TABLE IF NOT EXISTS `comments` (
-  `id_comment` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `comments` (
+  `id_comment` int(11) NOT NULL,
   `id_user` int(11) NOT NULL,
   `id_article` int(11) NOT NULL,
-  `comments` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `date_comment` date NOT NULL DEFAULT current_timestamp(),
-  PRIMARY KEY (`id_comment`),
-  KEY `id_user` (`id_user`,`id_article`),
-  KEY `id_article` (`id_article`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `comments` text NOT NULL,
+  `date_comment` date NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Déchargement des données de la table `comments`
@@ -85,12 +76,9 @@ INSERT INTO `comments` (`id_comment`, `id_user`, `id_article`, `comments`, `date
 -- Structure de la table `dislike`
 --
 
-DROP TABLE IF EXISTS `dislike`;
-CREATE TABLE IF NOT EXISTS `dislike` (
+CREATE TABLE `dislike` (
   `id_user` int(11) NOT NULL,
-  `id_article` int(11) NOT NULL,
-  KEY `id_user` (`id_user`,`id_article`),
-  KEY `id_article` (`id_article`)
+  `id_article` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -99,13 +87,17 @@ CREATE TABLE IF NOT EXISTS `dislike` (
 -- Structure de la table `favourites`
 --
 
-DROP TABLE IF EXISTS `favourites`;
-CREATE TABLE IF NOT EXISTS `favourites` (
+CREATE TABLE `favourites` (
   `id_user` int(11) NOT NULL,
-  `id_article` int(11) NOT NULL,
-  KEY `id_user` (`id_user`,`id_article`),
-  KEY `id_article` (`id_article`)
+  `id_article` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Déchargement des données de la table `favourites`
+--
+
+INSERT INTO `favourites` (`id_user`, `id_article`) VALUES
+(20, 3);
 
 -- --------------------------------------------------------
 
@@ -113,12 +105,9 @@ CREATE TABLE IF NOT EXISTS `favourites` (
 -- Structure de la table `like_article`
 --
 
-DROP TABLE IF EXISTS `like_article`;
-CREATE TABLE IF NOT EXISTS `like_article` (
+CREATE TABLE `like_article` (
   `id_user` int(11) NOT NULL,
-  `id_article` int(11) NOT NULL,
-  KEY `id_user` (`id_user`,`id_article`),
-  KEY `id_article` (`id_article`)
+  `id_article` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -129,7 +118,8 @@ INSERT INTO `like_article` (`id_user`, `id_article`) VALUES
 (5, 3),
 (13, 1),
 (13, 3),
-(13, 10);
+(13, 10),
+(20, 3);
 
 -- --------------------------------------------------------
 
@@ -137,12 +127,9 @@ INSERT INTO `like_article` (`id_user`, `id_article`) VALUES
 -- Structure de la table `like_comment`
 --
 
-DROP TABLE IF EXISTS `like_comment`;
-CREATE TABLE IF NOT EXISTS `like_comment` (
+CREATE TABLE `like_comment` (
   `id_user` int(11) NOT NULL,
-  `id_comment` int(11) NOT NULL,
-  KEY `id_user` (`id_user`,`id_comment`),
-  KEY `id_comment` (`id_comment`)
+  `id_comment` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -151,12 +138,10 @@ CREATE TABLE IF NOT EXISTS `like_comment` (
 -- Structure de la table `roles`
 --
 
-DROP TABLE IF EXISTS `roles`;
-CREATE TABLE IF NOT EXISTS `roles` (
-  `id_role` int(11) NOT NULL AUTO_INCREMENT,
-  `nom_role` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  PRIMARY KEY (`id_role`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+CREATE TABLE `roles` (
+  `id_role` int(11) NOT NULL,
+  `nom_role` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Déchargement des données de la table `roles`
@@ -173,12 +158,10 @@ INSERT INTO `roles` (`id_role`, `nom_role`) VALUES
 -- Structure de la table `states`
 --
 
-DROP TABLE IF EXISTS `states`;
-CREATE TABLE IF NOT EXISTS `states` (
-  `id_valid` int(11) NOT NULL AUTO_INCREMENT,
-  `etat` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  PRIMARY KEY (`id_valid`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+CREATE TABLE `states` (
+  `id_valid` int(11) NOT NULL,
+  `etat` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Déchargement des données de la table `states`
@@ -195,18 +178,15 @@ INSERT INTO `states` (`id_valid`, `etat`) VALUES
 -- Structure de la table `users`
 --
 
-DROP TABLE IF EXISTS `users`;
-CREATE TABLE IF NOT EXISTS `users` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `pseudo` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `avatar` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'https://bootdey.com/img/Content/avatar/avatar1.png',
-  `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `role_user` int(11) NOT NULL DEFAULT 1,
-  PRIMARY KEY (`id`),
-  KEY `role` (`role_user`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+CREATE TABLE `users` (
+  `id` int(11) NOT NULL,
+  `pseudo` varchar(100) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `avatar` varchar(255) NOT NULL DEFAULT 'https://bootdey.com/img/Content/avatar/avatar1.png',
+  `token` varchar(255) NOT NULL,
+  `role_user` int(11) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Déchargement des données de la table `users`
@@ -215,7 +195,108 @@ CREATE TABLE IF NOT EXISTS `users` (
 INSERT INTO `users` (`id`, `pseudo`, `password`, `email`, `avatar`, `token`, `role_user`) VALUES
 (5, 'GOAT', '$2y$10$U30z7VVq..fi7LyRsdy7ZeWk7Nkmw4QhBG7qYVvPUre6Qmg3GHICK', 'jojo@goat.com', 'https://bootdey.com/img/Content/avatar/avatar1.png', '64206d8779895', 3),
 (13, 'modo13', '$2y$10$0zMIKjz61jzduRxLuZFneuOc70yFfZ8akpxhHKTG2M8lIYxoJTMiS', 'modo@modo.fr', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQB1vQ-2eBzR5YYKw0LWVahNT5F4zcpt5OMkA&amp;usqp=CAU', '6422b6a7b06dd', 2),
-(14, 'Jordan23', '$2y$10$gqaJpC9EKTIIZwEzB7K/huSfuaBiZ8ggMMvro3HGIjUe9FKyvE/v2', 'jojo@jojo.fr', 'https://bootdey.com/img/Content/avatar/avatar1.png', '642988eb35efa', 1);
+(20, 'Bobo13', '$2y$10$upWMlBdrXVUNWps/7Ym9aue1vXzOK7GNi896S0KLTsxr0vKeH.X.q', 'bobo@bobo.com', 'https://bootdey.com/img/Content/avatar/avatar1.png', '642ab93577225', 1);
+
+--
+-- Index pour les tables déchargées
+--
+
+--
+-- Index pour la table `articles`
+--
+ALTER TABLE `articles`
+  ADD PRIMARY KEY (`id_article`),
+  ADD KEY `author` (`author`),
+  ADD KEY `valid` (`valid`);
+
+--
+-- Index pour la table `comments`
+--
+ALTER TABLE `comments`
+  ADD PRIMARY KEY (`id_comment`),
+  ADD KEY `id_user` (`id_user`,`id_article`),
+  ADD KEY `id_article` (`id_article`);
+
+--
+-- Index pour la table `dislike`
+--
+ALTER TABLE `dislike`
+  ADD KEY `id_user` (`id_user`,`id_article`),
+  ADD KEY `id_article` (`id_article`);
+
+--
+-- Index pour la table `favourites`
+--
+ALTER TABLE `favourites`
+  ADD KEY `id_user` (`id_user`,`id_article`),
+  ADD KEY `id_article` (`id_article`);
+
+--
+-- Index pour la table `like_article`
+--
+ALTER TABLE `like_article`
+  ADD KEY `id_user` (`id_user`,`id_article`),
+  ADD KEY `id_article` (`id_article`);
+
+--
+-- Index pour la table `like_comment`
+--
+ALTER TABLE `like_comment`
+  ADD KEY `id_user` (`id_user`,`id_comment`),
+  ADD KEY `id_comment` (`id_comment`);
+
+--
+-- Index pour la table `roles`
+--
+ALTER TABLE `roles`
+  ADD PRIMARY KEY (`id_role`);
+
+--
+-- Index pour la table `states`
+--
+ALTER TABLE `states`
+  ADD PRIMARY KEY (`id_valid`);
+
+--
+-- Index pour la table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `role` (`role_user`);
+
+--
+-- AUTO_INCREMENT pour les tables déchargées
+--
+
+--
+-- AUTO_INCREMENT pour la table `articles`
+--
+ALTER TABLE `articles`
+  MODIFY `id_article` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- AUTO_INCREMENT pour la table `comments`
+--
+ALTER TABLE `comments`
+  MODIFY `id_comment` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT pour la table `roles`
+--
+ALTER TABLE `roles`
+  MODIFY `id_role` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT pour la table `states`
+--
+ALTER TABLE `states`
+  MODIFY `id_valid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT pour la table `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- Contraintes pour les tables déchargées

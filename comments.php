@@ -1,11 +1,7 @@
 <?php
 
-
-
-
 $article_id = null;
 
-// Mais si il y'en a un et que c'est un nombre entier, alors c'est cool
 if (!empty($_GET['article_id']) && ctype_digit($_GET['article_id'])) {
     $article_id = $_GET['article_id'];
 }
@@ -15,8 +11,8 @@ if (isset($_POST['submit_commentaire'])) {
         $user_id = $_SESSION['id'];
         $commentaire = htmlspecialchars($_POST['commentaire']);
         if (strlen($commentaire) > 5) {
-            $ins = $pdo->prepare('INSERT INTO comments (id_user, id_article, comments, date_comment) VALUES (?,?,?, NOW())');
-            $ins->execute(array($user_id, $article_id, $commentaire));
+
+            addComments($user_id, $article_id, $commentaire);
             $msg = "<span style='color:green'>Votre commentaire a bien été posté</span>";
 
         } else {
@@ -27,19 +23,13 @@ if (isset($_POST['submit_commentaire'])) {
     }
 }
 
+//nb of comments
+$nbcomments = countComments($article_id);
 
-$count = $pdo->prepare('SELECT COUNT(id_comment) as nbComments from comments WHERE id_article = :article_id');
-$count->execute(['article_id' => $article_id]);
-$nbcomments = $count->fetch();
-
-$resultats = $pdo->prepare("SELECT * from comments c JOIN users u ON u.id = c.id_user WHERE id_article = :article_id");
-$resultats->execute(['article_id' => $article_id]);
-$comments = $resultats->fetchAll();
-
+//render comments 
+$comments = findCommentsByArticle($article_id);
 
 
 require('templates/comments/comments.html.php');
-
-
 
 ?>

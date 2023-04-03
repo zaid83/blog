@@ -7,18 +7,21 @@ require('libraries/utils.php');
 
 $pdo = getPdo();
 $sessionid = $_SESSION['id'];
-$resultats = $pdo->prepare("SELECT * from articles INNER JOIN states s ON s.id_valid = articles.valid  WHERE author = ? ORDER BY date_article DESC");
-$resultats->execute([$sessionid]);
-$listarticles = $resultats->fetchAll();
+
+
+// FIND ALL ARTICLES BY USER
+$listarticles = findAllArticlesByUser($sessionid);
+
+
+if ($listarticles) {
 $pageTitle = "Mes Articles";
 $subheading = "liste de mes articles";
 $pageTitle2 = "Liste de mes articles";
 
 
-ob_start();
-require('templates/articles/mesArticles.html.php');
-$pageContent = ob_get_clean();
+renderHTML('templates/articles/mesArticles.html',
+compact('pageTitle','subheading', 'pageTitle2', 'listarticles'));
 
-require('templates/layout.html.php');
-
-?>
+}else {
+renderHTML('noArticles');
+}

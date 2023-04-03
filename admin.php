@@ -44,7 +44,7 @@ $subheading = "Controle Admin";
 
 renderHTML(
     'templates/login/admin.html',
-    compact('articles')
+    compact('pageTitle','nbArticles', 'listarticles','listComs', 'listusers', 'nbUsers', 'nbComs', 'subheading')
 );
 
 ?>

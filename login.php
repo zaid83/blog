@@ -8,10 +8,7 @@ if (!empty($_POST['email']) && !empty($_POST['password'])) {
     $email = $_POST['email'];
     $password = $_POST['password'];
 
-    $login = $pdo->prepare('SELECT * FROM users WHERE email = :email');
-    $login->bindValue('email', $email);
-    $login->execute();
-    $res = $login->fetch(PDO::FETCH_ASSOC);
+    $res = connectUser($email);
 
     if ($res) {
 
@@ -26,6 +23,8 @@ if (!empty($_POST['email']) && !empty($_POST['password'])) {
             $_SESSION['avatar'] = $res['avatar'];
             $_SESSION['token'] = $res['token'];
             $_SESSION['role'] = $res['role_user'];
+
+            
             redirect('index.php');
         } else {
             $message = "Mot de passe invalide";

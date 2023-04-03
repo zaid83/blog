@@ -46,6 +46,19 @@ return $article;
  }
 
 
+ /***
+  * return list of articles by user
+  */
+
+  function findAllArticlesByUser($userid){
+    $pdo = getPdo();
+    $resultats = $pdo->prepare("SELECT * from articles INNER JOIN states s ON s.id_valid = articles.valid  WHERE author = ? ORDER BY date_article DESC");
+    $resultats->execute([$userid]);
+    $listarticles = $resultats->fetchAll();
+    return $listarticles;
+  }
+
+
  /*****
   * LIKES
   */
@@ -84,7 +97,7 @@ return $likes;
 
 /**
  * Verify if article was liked
- * @return boolean
+ * 
  */
 
  function checkLike(int $article, int $user){
@@ -96,7 +109,7 @@ return $check_like;
 
  /**
  * Verify if article was unliked
- * @return boolean
+ * 
  */
 
  function checkDislike(int $article, int $user){
@@ -108,7 +121,7 @@ return $check_dislike;
 
   /**
  * Verify if article was favourite
- * @return boolean
+ * 
  */
 
  function checkFav(int $article, int $user){
@@ -119,12 +132,25 @@ return $checkfav;
  }
 
 
+
+
+
+ /***
+  * USERS
+  */
+
+
+
+
+
+
+
  /**
   * Sign up User
   * 
   */
 
-function addUser($pseudo, $password, $email, $token):void
+function addUser(string $pseudo, string $password, string $email, string $token):void
 {
 $pdo = getPdo();
 $insert = $pdo->prepare("
@@ -137,3 +163,75 @@ $insert->bindParam(':token', $token);
 $insert->execute();
 
   }
+
+
+   
+ /**
+  * Sign in User
+  * 
+  */
+
+  function connectUser(string $email){
+    $pdo = getPdo();
+    $login = $pdo->prepare('SELECT * FROM users WHERE email = :email');
+    $login->bindValue('email', $email);
+    $login->execute();
+    $res = $login->fetch(PDO::FETCH_ASSOC);
+    return $res;
+  }
+
+
+  /***
+   * COMMENTS
+   */
+
+
+   /***
+    * Add comments
+    */
+
+    function addComments(int $user , int $article, string $comments):void
+    {
+      $pdo = getPdo();
+      $ins = $pdo->prepare('INSERT INTO comments (id_user, id_article, comments, date_comment) VALUES (?,?,?, NOW())');
+      $ins->execute(array($user, $article, $comments));
+    }
+
+    /***
+    * Count comments by article
+    *@return int
+    */
+
+    function countComments(int $article)
+    {
+      $pdo = getPdo();
+      $count = $pdo->prepare('SELECT COUNT(id_comment) as nbComments from comments WHERE id_article = :article_id');
+      $count->execute(['article_id' => $article]);
+      $nbcomments = $count->fetch();
+      return $nbcomments;
+    }
+
+    /***
+    * Render comments by article
+    *@return array
+    */
+
+    function findCommentsByArticle(int $article)
+    {
+      $pdo = getPdo();
+      $resultats = $pdo->prepare("SELECT * from comments c JOIN users u ON u.id = c.id_user WHERE id_article = :article_id");
+      $resultats->execute(['article_id' => $article]);
+      $comments = $resultats->fetchAll();
+      return $comments;
+    }
+
+    /***
+     * Delete a Element
+     */
+
+     function deleteElement(int $supprime, string $table, string $id){
+      $pdo = getPdo();
+      $del = $pdo->prepare('DELETE FROM '.$table.' WHERE '.$id.' = ?');
+      $del->execute([$supprime]);
+      
+     }
