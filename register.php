@@ -27,7 +27,7 @@ if (isset($_POST["pseudo"]) && isset($_POST["email"])) {
     $specialChars = preg_match('@[^\w]@', $password);
 
     if (isset($_POST["submit"])) {
-
+        
         $compare = $pdo->prepare('SELECT email FROM users WHERE email = ?');
         $compare->execute([$email]);
         $res = $compare->fetchAll(PDO::FETCH_ASSOC);
@@ -52,13 +52,11 @@ if (isset($_POST["pseudo"]) && isset($_POST["email"])) {
             $message = "Ce password doit avoir au moins une majuscule, une minuscule, un nombre, un caratère speciale et dépasser 8 caractères";
         } else if ($password != $password2) {
             $message = "Les mots de passe ne matchent pas";
-        }
-
-
-
+        
 
         // INSERT TO DB
     } else {
+        
         $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
         $insert = $pdo->prepare("
                 INSERT INTO users(pseudo, password, email, token)
@@ -72,7 +70,7 @@ if (isset($_POST["pseudo"]) && isset($_POST["email"])) {
         header("Location:login.php");
     }
 }
-
+}
 
 
 
