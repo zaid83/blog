@@ -3,8 +3,8 @@
 
 require('libraries/database.php');
 require('libraries/utils.php');
-
 $pdo = getPdo();
+
 $message = '';
 
 if (isset($_POST["pseudo"]) && isset($_POST["email"])) {
@@ -75,4 +75,10 @@ if (isset($_POST["pseudo"]) && isset($_POST["email"])) {
     }
 }
 
-renderHTML('templates/login/register.html', compact('message'));
+
+
+
+
+$pageTitle = "Inscription";
+renderHTML('templates/login/register.html',
+compact('pageTitle','message'));

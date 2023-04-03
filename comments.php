@@ -1,10 +1,7 @@
 <?php
 
 
-require('libraries/database.php');
-require('libraries/utils.php');
 
-$pdo = getPdo();
 
 $article_id = null;
 
