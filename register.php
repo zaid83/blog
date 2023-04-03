@@ -61,20 +61,22 @@ if (isset($_POST["pseudo"]) && isset($_POST["email"])) {
 
         // INSERT TO DB
     } else {
-        $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
-        $insert = $pdo->prepare("
-                INSERT INTO users(pseudo, password, email, token)
-                VALUES(:pseudo, :password, :email, :token)");
-        $insert->bindParam(':pseudo', $pseudo);
-        $insert->bindParam(':password', $password);
-        $insert->bindParam(':email', $email);
-        $insert->bindParam(':token', $token);
-        $insert->execute();
-
-        header("Location:login.php");
-    }
+        
+            $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+            $insert = $pdo->prepare("
+                    INSERT INTO users(pseudo, password, email, token)
+                    VALUES(:pseudo, :password, :email, :token)");
+            $insert->bindParam(':pseudo', $pseudo);
+            $insert->bindParam(':password', $password);
+            $insert->bindParam(':email', $email);
+            $insert->bindParam(':token', $token);
+            $insert->execute();
+    
+            header("Location:login.php");
+        
 }
 
+}
 
 
 
