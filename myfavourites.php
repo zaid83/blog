@@ -16,12 +16,14 @@ if ($articles) {
     $pageTitle2 = "Liste de mes favoris";
     $pageFav = true;
 
-    
-    renderHTML('templates/articles/myfavourites.html',
-    compact('pageTitle','subheading', 'pageTitle2', 'pageFav', 'articles'));
 
-}else {
-    renderHTML('noArticles');
+
+    renderHTML(
+        'templates/articles/myfavourites.html',
+        compact('pageTitle', 'subheading', 'pageTitle2', 'pageFav', 'articles')
+    );
+
+} else {
+    $error = "Pas de favoris";
+    renderHTML('noArticles', compact('error'));
 }
-
-
