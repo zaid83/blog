@@ -34,8 +34,8 @@
             <?php if (isset($_SESSION['id']) && $_SESSION['role'] > 1) { ?>
 
                 <div class="col-md-3 col-sm-3 col-xs-3 col-lg-3">
-                    <button class="btn btn-danger " type="submit" name="submit2"><a
-                            href="editArticle.php?supprime=<?= $article['id_article'] ?>"></a> Supprimer</button>
+                    <<a class="btn btn-danger " href="delete.php?supprime_article=<?= $article['id_article'] ?>">
+                        Supprimer</a>
                 </div>
 
                 <div class="col-md-3 col-sm-3 col-xs-3 col-lg-3">

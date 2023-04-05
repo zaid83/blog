@@ -33,7 +33,6 @@ if (isset($_POST["pseudo"]) && isset($_POST["email"]) && isset($_POST["password"
             if (password_verify($password, $passwordHash)) {
                 updateUser($pseudo, $email, $user_id, $avatar);
                 $user = findUser($user_id);
-                $_SESSION['pseudo'] = $user['pseudo'];
                 redirect("index.php");
             } else {
                 $message = "Mauvais mot de passe";
@@ -52,7 +51,6 @@ if (isset($_POST["pseudo"]) && isset($_POST["email"]) && isset($_POST["password"
             if (!empty($pseudo) || !empty($email)) {
                 updateUserRoles($pseudo, $email, $user_id, $avatar, $role_id);
                 $user = findUser($user_id);
-                $_SESSION['pseudo'] = $user['pseudo'];
                 redirect("admin.php");
 
             } else {
@@ -68,5 +66,5 @@ if (isset($_POST["pseudo"]) && isset($_POST["email"]) && isset($_POST["password"
 $pageTitle = "Profil";
 renderHTML(
     'templates/login/profil.html',
-    compact('pageTitle', 'user', 'message')
+    compact('pageTitle', 'user', 'message', 'allroles')
 );

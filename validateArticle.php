@@ -13,19 +13,13 @@ $articles = $resultats->fetchAll();
 
 if (($articles)) {
 
-    ob_start();
-    require('templates/articles/validateArticle.html.php');
-    $pageContent = ob_get_clean();
-
-    require('templates/layout.html.php');
+    renderHTML('templates/articles/validateArticle.html', compact('articles'));
 
 } else {
     $error = "Pas d'articles à valider";
-    ob_start();
-    require('noArticles.php');
 
-    $pageContent = ob_get_clean();
-    require('templates/layout.html.php');
+    renderHTML('noArticles');
+
 }
 
 ?>

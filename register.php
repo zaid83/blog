@@ -1,6 +1,5 @@
 <?php
 
-
 require('libraries/database.php');
 require('libraries/utils.php');
 $pdo = getPdo();
@@ -8,7 +7,6 @@ $pdo = getPdo();
 $message = '';
 
 if (isset($_POST["pseudo"]) && isset($_POST["email"])) {
-
 
     function valid_donnees($donnees)
     {
@@ -38,7 +36,6 @@ if (isset($_POST["pseudo"]) && isset($_POST["email"])) {
         $compare2->execute([$pseudo]);
         $res2 = $compare2->fetchAll(PDO::FETCH_ASSOC);
 
-
         // VERIFICATIONS
         if ($res) {
             $message = "Mail dejà existant";
@@ -57,32 +54,21 @@ if (isset($_POST["pseudo"]) && isset($_POST["email"])) {
         }
 
 
-
-
         // INSERT TO DB
-     else {
-        
+        else {
+
             $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
             addUser($pseudo, $password, $email, $token);
-           /* $insert = $pdo->prepare("
-                    INSERT INTO users(pseudo, password, email, token)
-                    VALUES(:pseudo, :password, :email, :token)");
-            $insert->bindParam(':pseudo', $pseudo);
-            $insert->bindParam(':password', $password);
-            $insert->bindParam(':email', $email);
-            $insert->bindParam(':token', $token);
-            $insert->execute();
-    */
             header("Location:login.php");
-        
-}
 
-}
-}
+        }
 
-
+    }
+}
 
 
 $pageTitle = "Inscription";
-renderHTML('templates/login/register.html',
-compact('pageTitle','message'));
+renderHTML(
+    'templates/login/register.html',
+    compact('pageTitle', 'message')
+);

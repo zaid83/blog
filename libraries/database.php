@@ -46,6 +46,20 @@ function findArticle(int $id)
   return $article;
 }
 
+/**
+ *  Update article
+ *
+ */
+
+function updateArticle($title, $img_article, $content, $article_id)
+{
+  $pdo = getPdo();
+  $query = $pdo->prepare('UPDATE articles SET title = :title, img_article = :img_article, content = :content, date_article = NOW(), valid = 1 WHERE id_article = :article_id ');
+  $query->execute(compact('title', 'img_article', 'content', 'article_id'));
+}
+
+
+
 
 /***
  * return list of articles by user
@@ -68,6 +82,17 @@ function addArticle($title, $img_article, $content, $author)
   $pdo = getPdo();
   $query = $pdo->prepare('INSERT INTO articles SET title = :title, img_article = :img_article, content = :content, date_article = NOW(), author = :author');
   $query->execute(compact('title', 'img_article', 'content', 'author'));
+
+}
+
+/***
+ * Resend article
+ */
+function resendArticle($title, $img_article, $content, $article_id, $signal)
+{
+  $pdo = getPdo();
+  $query = $pdo->prepare('UPDATE articles SET title = :title, img_article = :img_article, content = :content, date_article = NOW(), valid = 2, Signalements = :signal WHERE id_article = :article_id ');
+  $query->execute(compact('title', 'img_article', 'content', 'article_id', 'signal'));
 
 }
 
@@ -309,6 +334,12 @@ function deleteElement(int $supprime, string $table, string $id)
  *
  */
 
+
+
+/***
+ * Render favourites
+ */
+
 function findFavourites(int $iduser)
 {
   $pdo = getPdo();
@@ -318,6 +349,9 @@ function findFavourites(int $iduser)
   return $articles;
 }
 
+/***
+ * Delete favourites
+ */
 function delFavourites(int $iduser, int $article)
 {
   $pdo = getPdo();
@@ -325,6 +359,9 @@ function delFavourites(int $iduser, int $article)
   $del->execute(array($article, $iduser));
 }
 
+/***
+ * Add favourites
+ */
 function addFavourites(int $iduser, int $article)
 {
   $pdo = getPdo();
