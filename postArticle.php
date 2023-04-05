@@ -12,7 +12,6 @@ if ($_SESSION['id']) {
 
 
     if (isset($_POST["title"]) && isset($_POST["img_article"]) && isset($_POST["content"])) {
-        // var_dump($_POST["title"], $_POST["img_article"], $_POST["content"]);
 
         $author = $_SESSION['id'];
         $title = htmlspecialchars($_POST["title"]);
@@ -30,10 +29,8 @@ if ($_SESSION['id']) {
                 $message = "L'article fait moins de 200 caractères";
 
             } else {
-                $query = $pdo->prepare('INSERT INTO articles SET title = :title, img_article = :img_article, content = :content, date_article = NOW(), author = :author');
-                $query->execute(compact('title', 'img_article', 'content', 'author'));
-                //On renvoie l'utilisateur vers la page de remerciement
-                header("Location:index.php");
+                addArticle($title, $img_article, $content, $author);
+                redirect("index.php");
             }
         }
     }
@@ -42,13 +39,10 @@ if ($_SESSION['id']) {
 
 
 $pageTitle = "Poster un article";
-ob_start();
-require('templates/articles/postArticle.html.php');
-$pageContent = ob_get_clean();
+
+renderHTML("templates/articles/postArticle.html", compact('pageTitle', 'message'));
 
 
-
-require('templates/layout.html.php');
 
 
 

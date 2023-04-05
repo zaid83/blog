@@ -18,6 +18,7 @@ if ($articles) {
     );
 
 } else {
+    $error = "Pas d'articles";
     renderHTML('noArticles');
 }
 

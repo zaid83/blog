@@ -10,18 +10,15 @@ session_start();
 $user_id = $_GET['id'];
 $message = '';
 
-//recuperer l'article à éditer
-$resultats = $pdo->prepare("SELECT * from users  WHERE id = :user_id");
-$resultats->execute(['user_id' => $user_id]);
-$user = $resultats->fetch();
+//recuperer le profil à éditer
+$user = findUser($user_id);
 
-$res = $pdo->prepare("SELECT * from roles");
-$res->execute();
-$allroles = $res->fetchAll();
+//recuperer les roles
+$allroles = findRoles();
 
 
 
-//update l'article 
+//update le profil
 if (isset($_POST["pseudo"]) && isset($_POST["email"]) && isset($_POST["password"])) {
 
     $pseudo = htmlspecialchars($_POST["pseudo"]);
@@ -34,9 +31,10 @@ if (isset($_POST["pseudo"]) && isset($_POST["email"]) && isset($_POST["password"
 
         if (!empty($pseudo) || !empty($email) || !empty($password)) {
             if (password_verify($password, $passwordHash)) {
-                $query = $pdo->prepare('UPDATE users SET pseudo = :pseudo, email = :email, avatar = :avatar  WHERE id = :user_id ');
-                $query->execute(compact('pseudo', 'email', 'user_id', 'avatar'));
-                header("Location:index.php");
+                updateUser($pseudo, $email, $user_id, $avatar);
+                $user = findUser($user_id);
+                $_SESSION['pseudo'] = $user['pseudo'];
+                redirect("index.php");
             } else {
                 $message = "Mauvais mot de passe";
 
@@ -52,9 +50,10 @@ if (isset($_POST["pseudo"]) && isset($_POST["email"]) && isset($_POST["password"
         if (isset($_POST["submitAdmin"])) {
 
             if (!empty($pseudo) || !empty($email)) {
-                $query2 = $pdo->prepare('UPDATE users SET pseudo = :pseudo, email = :email, avatar = :avatar, role_user = :role_id  WHERE id = :user_id ');
-                $query2->execute(compact('pseudo', 'email', 'user_id', 'avatar', 'role_id'));
-                header("Location:admin.php");
+                updateUserRoles($pseudo, $email, $user_id, $avatar, $role_id);
+                $user = findUser($user_id);
+                $_SESSION['pseudo'] = $user['pseudo'];
+                redirect("admin.php");
 
             } else {
                 $message = "Un des champs est vide";
@@ -67,10 +66,7 @@ if (isset($_POST["pseudo"]) && isset($_POST["email"]) && isset($_POST["password"
 
 
 $pageTitle = "Profil";
-ob_start();
-require('templates/login/profil.html.php');
-$pageContent = ob_get_clean();
-
-
-
-require('templates/layout.html.php');
+renderHTML(
+    'templates/login/profil.html',
+    compact('pageTitle', 'user', 'message')
+);

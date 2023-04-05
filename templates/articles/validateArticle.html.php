@@ -32,25 +32,17 @@ if (isset($_SESSION['id']) && $_SESSION['role'] > 1) { ?>
                     <div class="post-preview">
                         <img src="<?= $article['img_article'] ?>" alt="img article">
                         <div class="post-content">
-                            <?php if ($pageFav = false) { ?>
-                                <a href="editarticle.php?article_id=<?= $article['id_article'] ?>">
-                                    <h2 class="post-title">
-                                        <?= $article['title'] ?>
-                                    </h2>
-                                </a>
-                            <?php } else { ?>
-                                <a href="article.php?article_id=<?= $article['id_article'] ?>">
-                                    <h2 class="post-title">
-                                        <?= $article['title'] ?>
-                                    </h2>
-                                </a>
-                            <?php } ?>
+                            <a href="editarticle.php?article_id=<?= $article['id_article'] ?>">
+                                <h2 class="post-title">
+                                    <?= $article['title'] ?>
+                                </h2>
+                            </a>
                             <p class="post-meta">
-                                Posted by
-                                <a href="#!">
+                                Posté par
+                                <span href="#!">
                                     <?= $article['pseudo'] ?>
-                                </a>
-                                on
+                                </span>
+                                le
                                 <?= $article['date_article'] ?>
                             </p>
                         </div>

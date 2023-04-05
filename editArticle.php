@@ -52,15 +52,10 @@ if (isset($_POST["title"]) && isset($_POST["img_article"]) && isset($_POST["cont
     }
 
 
-    if (isset($_SESSION['id']) && $_SESSION['role'] == 1) {
-        if (isset($_POST["submit3"])) {
-            $query = $pdo->prepare('UPDATE articles SET title = :title, img_article = :img_article, content = :content, date_article = NOW(), valid = 3, Signalements = :signal WHERE id_article = :article_id ');
-            $query->execute(compact('title', 'img_article', 'content', 'article_id', 'signal'));
-            header("Location:index.php");
-        }
-    }
 }
 
+
+//delete article
 if (isset($_POST["submit2"])) {
     $supprime = (int) $_GET['article_id'];
 
@@ -74,12 +69,8 @@ if (isset($_POST["submit2"])) {
 
 
 $pageTitle = "Publier un Article";
-ob_start();
-require('templates/articles/editArticle.html.php');
-$pageContent = ob_get_clean();
+renderHTML('templates/articles/editArticle.html');
 
 
-
-require('templates/layout.html.php');
 
 ?>
