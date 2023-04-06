@@ -10,8 +10,6 @@ $pdo = getPdo();
 $articles = findAllArticlesValid();
 
 
-
-
 // RENDER PAGE
 if ($articles) {
     $pageTitle = "Accueil";
