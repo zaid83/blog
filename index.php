@@ -9,12 +9,15 @@ $pdo = getPdo();
 //SELECT ALL VALID ARTICLES
 $articles = findAllArticlesValid();
 
+
+
+
 // RENDER PAGE
 if ($articles) {
     $pageTitle = "Accueil";
     renderHTML(
         'templates/index.html',
-        compact('articles')
+        compact('articles', 'pageTitle')
     );
 
 } else {

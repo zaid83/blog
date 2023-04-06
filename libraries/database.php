@@ -33,6 +33,33 @@ function findAllArticlesValid()
 }
 
 /**
+ * Return all articles
+ * @return array
+ */
+
+function findAllArticles()
+{
+  $pdo = getPdo();
+  $resultats = $pdo->query("SELECT * from articles a JOIN states s ON a.valid = s.id_valid ORDER BY date_article DESC");
+  $articles = $resultats->fetchAll();
+  return $articles;
+}
+
+/**
+ * Count all articles
+ * 
+ */
+
+function countAllArticles()
+{
+  $pdo = getPdo();
+  $nbArticles = $pdo->prepare("SELECT * from articles");
+  $nbArticles->execute();
+  $nbArticles = $nbArticles->rowCount();
+  return $nbArticles;
+}
+
+/**
  *  Return one article
  * @return array
  */
@@ -44,6 +71,19 @@ function findArticle(int $id)
   $resultats->execute(['article_id' => $id]);
   $article = $resultats->fetch();
   return $article;
+}
+
+/**
+ *  Find one article
+ *
+ */
+
+function selectArticle(int $id)
+{
+  $pdo = getPdo();
+  $resultats = $pdo->prepare("SELECT * from articles JOIN users ON users.id = articles.author WHERE id_article = :article_id");
+  $resultats->execute(['article_id' => $id]);
+  return $resultats;
 }
 
 /**
@@ -130,6 +170,57 @@ function countDislikes($id)
 }
 
 
+/**
+ * Delete Dislikes
+ * 
+ */
+
+function delDislike(int $article, int $user)
+{
+  $pdo = getPdo();
+  $del = $pdo->prepare('DELETE FROM dislike WHERE id_article = ? AND id_user = ?');
+  $del->execute(array($article, $user));
+}
+
+/**
+ * Delete likes
+ * 
+ */
+
+function delLikes(int $article, int $user)
+{
+  $pdo = getPdo();
+  $del = $pdo->prepare('DELETE FROM like_article WHERE id_article = ? AND id_user = ?');
+  $del->execute(array($article, $user));
+}
+
+
+/**
+ * Insert Likes
+ */
+function insertLikes(int $article, int $user)
+{
+  $pdo = getPdo();
+  $ins = $pdo->prepare('INSERT INTO like_article (id_article, id_user) VALUES (?, ?)');
+  $ins->execute(array($article, $user));
+}
+
+/**
+ * Insert DisLikes
+ */
+function insertDislikes(int $article, int $user)
+{
+  $pdo = getPdo();
+  $ins = $pdo->prepare('INSERT INTO dislike (id_article, id_user) VALUES (?, ?)');
+  $ins->execute(array($article, $user));
+}
+
+
+
+
+
+
+
 /*****
  * 
  * CHECKING
@@ -178,10 +269,33 @@ function checkFav(int $article, int $user)
 
 
 
+
 /***
  * USERS
  */
 
+/**
+ * Find All Users
+ */
+function findAllUsers()
+{
+  $pdo = getPdo();
+  $showUsers = $pdo->prepare("SELECT * from users INNER JOIN roles r ON r.id_role = users.role_user ORDER BY pseudo ASC");
+  $showUsers->execute();
+  $listusers = $showUsers->fetchAll();
+  return $listusers;
+
+}
+
+
+function countAllUsers()
+{
+  $pdo = getPdo();
+  $nbusers = $pdo->prepare("SELECT * from users");
+  $nbusers->execute();
+  $nbusers = $nbusers->rowCount();
+  return $nbusers;
+}
 
 
 
@@ -278,6 +392,34 @@ function connectUser(string $email)
 
 
 /***
+ * Find All Comments
+ */
+
+function findAllComments()
+{
+  $pdo = getPdo();
+  $showComs = $pdo->prepare("SELECT * from comments c JOIN users u ON u.id = c.id_user JOIN articles a ON a.id_article = c.id_article");
+  $showComs->execute();
+  $listComs = $showComs->fetchAll();
+  return $listComs;
+}
+
+/** *
+ * NB Comments
+ */
+
+function countComments()
+{
+  $pdo = getPdo();
+  //Nb comments
+  $nbComs = $pdo->prepare("SELECT * from comments");
+  $nbComs->execute();
+  $nbComs = $nbComs->rowCount();
+  return $nbComs;
+}
+
+
+/***
  * Add comments
  */
 
@@ -293,7 +435,7 @@ function addComments(int $user, int $article, string $comments): void
  *@return int
  */
 
-function countComments(int $article)
+function countCommentsByArticle(int $article)
 {
   $pdo = getPdo();
   $count = $pdo->prepare('SELECT COUNT(id_comment) as nbComments from comments WHERE id_article = :article_id');

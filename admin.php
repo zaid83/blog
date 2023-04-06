@@ -6,45 +6,36 @@ require('libraries/utils.php');
 $pdo = getPdo();
 session_start();
 
-//tous les articles
+//All articles
+$listarticles = findAllArticles();
 
-$showArticles = $pdo->prepare("SELECT * from articles INNER JOIN states s ON s.id_valid = articles.valid ORDER BY date_article DESC");
-$showArticles->execute();
-$listarticles = $showArticles->fetchAll();
+//Nb articles
+$nbArticles = countAllArticles();
 
-//nb articles
-$nbArticles = $pdo->prepare("SELECT * from comments");
-$nbArticles->execute();
-$nbArticles = $nbArticles->rowCount();
+//All users
+$listusers = findAllUsers();
 
-//tous les users
+//NB users
+$nbUsers = countAllUsers();
 
-$showUsers = $pdo->prepare("SELECT * from users INNER JOIN roles r ON r.id_role = users.role_user ORDER BY pseudo ASC");
-$showUsers->execute();
-$listusers = $showUsers->fetchAll();
+//All comments
+$listComs = findAllComments();
 
-//nb utilisateurs
-$nbUsers = $pdo->prepare("SELECT * from users");
-$nbUsers->execute();
-$nbUsers = $nbUsers->rowCount();
-
-//tous les comments
-$showComs = $pdo->prepare("SELECT * from comments c JOIN users u ON u.id = c.id_user JOIN articles a ON a.id_article = c.id_article");
-$showComs->execute();
-$listComs = $showComs->fetchAll();
-
-//nb comments
-$nbComs = $pdo->prepare("SELECT * from comments");
-$nbComs->execute();
-$nbComs = $nbComs->rowCount();
+//Nb comments
+$nbComs = countComments();
 
 
 $pageTitle = "Administrateur";
 $subheading = "Controle Admin";
 
-renderHTML(
-    'templates/login/admin.html',
-    compact('pageTitle','nbArticles', 'listarticles','listComs', 'listusers', 'nbUsers', 'nbComs', 'subheading')
-);
 
+
+if ($_SESSION['role'] == 3) {
+    renderHTML(
+        'templates/login/admin.html',
+        compact('pageTitle', 'nbArticles', 'listarticles', 'listComs', 'listusers', 'nbUsers', 'nbComs', 'subheading')
+    );
+} else {
+    redirect('logout.php');
+}
 ?>

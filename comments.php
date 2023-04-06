@@ -24,7 +24,7 @@ if (isset($_POST['submit_commentaire'])) {
 }
 
 //nb of comments
-$nbcomments = countComments($article_id);
+$nbcomments = countCommentsByArticle($article_id);
 
 //render comments 
 $comments = findCommentsByArticle($article_id);

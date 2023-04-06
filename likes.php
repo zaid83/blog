@@ -1,6 +1,5 @@
 <?php
 
-
 require('libraries/database.php');
 require('libraries/utils.php');
 
@@ -10,51 +9,39 @@ if (isset($_GET['type'], $_GET['id']) and !empty($_GET['type']) and !empty($_GET
     $getid = (int) $_GET['id'];
     $gett = (int) $_GET['type'];
     $sessionid = $_SESSION['id'];
-    $check = $pdo->prepare('SELECT id_article FROM articles WHERE id_article = ?');
-    $check->execute(array($getid));
+
+    //find an article
+    $check = selectArticle($getid);
+
+    // if exist
     if ($check->rowCount() == 1) {
+
+        // if click on likes
         if ($gett == 1) {
-            $check_like = $pdo->prepare('SELECT id_article FROM like_article WHERE id_article = ? AND id_user = ?');
-            $check_like->execute(array($getid, $sessionid));
-            $del = $pdo->prepare('DELETE FROM dislike WHERE id_article = ? AND id_user = ?');
-            $del->execute(array($getid, $sessionid));
+            $check_like = checkLike($getid, $sessionid);
+            delDislike($getid, $sessionid);
+
+            //if like exist
             if ($check_like->rowCount() == 1) {
-                $del = $pdo->prepare('DELETE FROM like_article WHERE id_article = ? AND id_user = ?');
-                $del->execute(array($getid, $sessionid));
+                delLikes($getid, $sessionid);
             } else {
-                $ins = $pdo->prepare('INSERT INTO like_article (id_article, id_user) VALUES (?, ?)');
-                $ins->execute(array($getid, $sessionid));
+                insertLikes($getid, $sessionid);
             }
 
+            // if click on dislikes
         } elseif ($gett == 2) {
-            $check_like = $pdo->prepare('SELECT id_article FROM dislike WHERE id_article = ? AND id_user = ?');
-            $check_like->execute(array($getid, $sessionid));
-            $del = $pdo->prepare('DELETE FROM like_article WHERE id_article = ? AND id_user = ?');
-            $del->execute(array($getid, $sessionid));
-            if ($check_like->rowCount() == 1) {
-                $del = $pdo->prepare('DELETE FROM dislike WHERE id_article = ? AND id_user = ?');
-                $del->execute(array($getid, $sessionid));
+            $check_dislike = checkDislike($getid, $sessionid);
+            delLikes($getid, $sessionid);
+            if ($check_dislike->rowCount() == 1) {
+                delDislike($getid, $sessionid);
             } else {
-                $ins = $pdo->prepare('INSERT INTO dislike (id_article, id_user) VALUES (?, ?)');
-                $ins->execute(array($getid, $sessionid));
+                insertDislikes($getid, $sessionid);
             }
         }
-        header('Location: article.php?article_id=' . $getid);
+        redirect('article.php?article_id=' . $getid);
     } else {
         exit('Erreur fatale. <a href="index.php">Revenir à l\'accueil</a>');
     }
 } else {
     exit('Erreur fatale. <a href="index.php">Revenir à l\'accueil</a>');
 }
-
-
-
-
-
-
-
-
-
-
-
-?>
