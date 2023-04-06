@@ -1,8 +1,8 @@
 <?php
 
-require('libraries/database.php');
 require('libraries/utils.php');
-$pdo = getPdo();
+require_once('libraries/models/User.php');
+$userModel = new User();
 
 $message = '';
 
@@ -27,16 +27,15 @@ if (isset($_POST["pseudo"]) && isset($_POST["email"])) {
     $specialChars = preg_match('@[^\w]@', $password);
 
     if (isset($_POST["submit"])) {
-
-        $compare = $pdo->prepare('SELECT email FROM users WHERE email = ?');
-        $compare->execute([$email]);
-        $res = $compare->fetchAll(PDO::FETCH_ASSOC);
-
-        $compare2 = $pdo->prepare('SELECT pseudo FROM users WHERE pseudo = ?');
-        $compare2->execute([$pseudo]);
-        $res2 = $compare2->fetchAll(PDO::FETCH_ASSOC);
-
         // VERIFICATIONS
+
+
+
+        $res = $userModel->check('email', $email);
+        $res2 = $userModel->check('pseudo', $pseudo);
+
+
+
         if ($res) {
             $message = "Mail dejà existant";
         } else if ($res2) {
@@ -58,7 +57,7 @@ if (isset($_POST["pseudo"]) && isset($_POST["email"])) {
         else {
 
             $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
-            addUser($pseudo, $password, $email, $token);
+            $userModel->add($pseudo, $password, $email, $token);
             header("Location:login.php");
 
         }

@@ -1,6 +1,5 @@
 <?php
 
-require('libraries/database.php');
 require('libraries/utils.php');
 require('libraries/models/User.php');
 session_start();

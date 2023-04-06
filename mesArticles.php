@@ -24,5 +24,6 @@ if ($listarticles) {
     );
 
 } else {
-    renderHTML('noArticles');
+    $error = "Pas d'articles";
+    renderHTML('noArticles', compact('error'));
 }

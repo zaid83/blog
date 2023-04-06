@@ -1,14 +1,16 @@
 <?php
-require_once("libraries/database.php");
-require_once("libraries/utils.php");
 
-$pdo = getPdo();
+require_once("libraries/utils.php");
+require_once('libraries/models/User.php');
+
+$userModel = new User();
+
 $message = "";
 if (!empty($_POST['email']) && !empty($_POST['password'])) {
     $email = $_POST['email'];
     $password = $_POST['password'];
 
-    $res = connectUser($email);
+    $res = $userModel->connect($email);
 
     if ($res) {
 
@@ -24,7 +26,7 @@ if (!empty($_POST['email']) && !empty($_POST['password'])) {
             $_SESSION['token'] = $res['token'];
             $_SESSION['role'] = $res['role_user'];
 
-            
+
             redirect('index.php');
         } else {
             $message = "Mot de passe invalide";

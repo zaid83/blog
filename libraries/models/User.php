@@ -116,5 +116,14 @@ VALUES(:pseudo, :password, :email, :token)");
         return $res;
     }
 
+    public function check($column, $params)
+    {
+
+        $compare = $this->pdo->prepare('SELECT ' . $column . ' FROM users WHERE ' . $column . ' = ?');
+        $compare->execute([$params]);
+        $res = $compare->fetchAll(PDO::FETCH_ASSOC);
+        return $res;
+    }
+
 
 }

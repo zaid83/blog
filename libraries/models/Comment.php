@@ -59,11 +59,4 @@ class Comment extends Model
     }
 
 
-    public function del(int $supprime, string $id)
-    {
-        $del = $this->pdo->prepare("DELETE FROM ' . $this->tables . ' WHERE ' . $id . ' = ?");
-        $del->execute([$supprime]);
-
-    }
-
 }

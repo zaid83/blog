@@ -16,7 +16,7 @@ if (isset($_GET['type'], $_GET['id']) and !empty($_GET['type']) and !empty($_GET
     $sessionid = $_SESSION['id'];
 
     //find an article
-    $check = $articleModel->selectArticle($getid);
+    $check = $articleModel->select($getid);
 
     // if exist
     if ($check->rowCount() == 1) {

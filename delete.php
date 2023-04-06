@@ -8,20 +8,21 @@ require_once('libraries/models/User.php');
 
 $articleModel = new Article();
 $commentModel = new Comment();
+$userModel = new User();
 
 
 if (isset($_GET['supprime_article'])) {
-    $articleModel->del($_GET['supprime_article'], "id_article");
+    $articleModel->del($_GET['supprime_article']);
     redirect('index.php');
 }
 
 if (isset($_GET['supprime_coms'])) {
-    $commentModel->del($_GET['supprime_coms'], "id_comment");
+    $commentModel->del($_GET['supprime_coms']);
     redirect('index.php');
 }
 
 if (isset($_GET['supprime_user'])) {
-    $userModel->del($_GET['supprime_user'], 'users', 'id');
+    $userModel->del($_GET['supprime_user']);
     redirect('index.php');
 }
 ?>
