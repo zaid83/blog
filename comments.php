@@ -12,7 +12,7 @@ if (isset($_POST['submit_commentaire'])) {
         $commentaire = htmlspecialchars($_POST['commentaire']);
         if (strlen($commentaire) > 5) {
 
-            addComments($user_id, $article_id, $commentaire);
+            $commentModel->addComments($user_id, $article_id, $commentaire);
             $msg = "<span style='color:green'>Votre commentaire a bien été posté</span>";
 
         } else {
@@ -24,10 +24,10 @@ if (isset($_POST['submit_commentaire'])) {
 }
 
 //nb of comments
-$nbcomments = countCommentsByArticle($article_id);
+$nbcomments = $commentModel->countCommentsByArticle($article_id);
 
 //render comments 
-$comments = findCommentsByArticle($article_id);
+$comments = $commentModel->findCommentsByArticle($article_id);
 
 
 require('templates/comments/comments.html.php');

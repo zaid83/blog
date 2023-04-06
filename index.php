@@ -1,13 +1,12 @@
 <?php
 session_start();
 
-require_once('libraries/database.php');
 require_once('libraries/utils.php');
+require_once('libraries/models/Article.php');
 
-$pdo = getPdo();
-
+$Article = new Article();
 //SELECT ALL VALID ARTICLES
-$articles = findAllArticlesValid();
+$articles = $Article->findAllArticlesValid();
 
 
 // RENDER PAGE

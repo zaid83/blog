@@ -3,10 +3,16 @@
 session_start();
 
 
-require('libraries/database.php');
-require('libraries/utils.php');
+require_once('libraries/utils.php');
+require_once('libraries/models/Article.php');
+require_once('libraries/models/Comment.php');
+require_once('libraries/models/Like.php');
+require_once('libraries/models/Dislike.php');
 
-$pdo = getPdo();
+$articleModel = new Article();
+$commentModel = new Comment();
+$likeArticle = new Like();
+$dislikeArticle = new Dislike();
 
 $article_id = null;
 
@@ -16,24 +22,24 @@ if (!empty($_GET['article_id']) && ctype_digit($_GET['article_id'])) {
 }
 
 // Recuperer l'article en question
-$article = findArticle($article_id);
+$article = $articleModel->findArticle($article_id);
 
 
 // Compter le nombre de like
-$likes = countLikes($article_id);
+$likes = $likeArticle->count($article_id);
 
 //Compter le nombre de dislikes
-$dislikes = countDislikes($article_id);
+$dislikes = $dislikeArticle->count($article_id);
 $check_like = '';
 $check_dislike = '';
 $checkfav = '';
 
 if (isset($_SESSION['id'])) {
     //Voir si l'article est liké
-    $check_like = checkLike($article_id, $_SESSION['id']);
+    $check_like = $likeArticle->check($article_id, $_SESSION['id']);
 
     //Voir si l'article est non liké
-    $check_dislike = checkDislike($article_id, $_SESSION['id']);
+    $check_dislike = $dislikeArticle->check($article_id, $_SESSION['id']);
 
     //Voir si l'article est en favori
     $checkfav = checkFav($article_id, $_SESSION['id']);
