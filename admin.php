@@ -1,28 +1,33 @@
 <?php
 
-require('libraries/database.php');
 require('libraries/utils.php');
+require_once('libraries/models/Article.php');
+require_once('libraries/models/Comment.php');
+require('libraries/models/User.php');
 
-$pdo = getPdo();
 session_start();
 
+$articleModel = new Article();
+$commentModel = new Article();
+$userModel = new Article();
+
 //All articles
-$listarticles = findAllArticles();
+$listarticles = $articleModel->findAll();
 
 //Nb articles
-$nbArticles = countAllArticles();
+$nbArticles = $articleModel->countAll();
 
 //All users
-$listusers = findAllUsers();
+$listusers = $userModel->findAll();
 
 //NB users
-$nbUsers = countAllUsers();
+$nbUsers = $userModel->countAll();
 
 //All comments
-$listComs = findAllComments();
+$listComs = $commentModel->findAll();
 
 //Nb comments
-$nbComs = countComments();
+$nbComs = $commentModel->countAll();
 
 
 $pageTitle = "Administrateur";

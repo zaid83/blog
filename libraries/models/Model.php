@@ -5,6 +5,8 @@ class Model
 {
     protected $pdo;
     protected $table;
+    protected $supprime;
+    protected $where;
 
     public function __construct()
     {
@@ -12,18 +14,23 @@ class Model
     }
 
 
+    public function del(int $supprime)
+    {
+        $del = $this->pdo->prepare("DELETE FROM  {$this->table} WHERE {$this->where} = ?");
+        $del->execute([$supprime]);
+    }
 
-
-    /***
-     * Delete a Element
+    /** *
+     * NB Comments,articles or users
      */
 
-    function deleteElement(int $supprime, string $table, string $id)
+    public function countAll()
     {
-        $pdo = getPdo();
-        $del = $pdo->prepare('DELETE FROM ' . $table . ' WHERE ' . $id . ' = ?');
-        $del->execute([$supprime]);
-
+        //Nb comments
+        $nb = $this->pdo->prepare("SELECT * from {$this->table}");
+        $nb->execute();
+        $nb = $nb->rowCount();
+        return $nb;
     }
 
 }

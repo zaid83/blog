@@ -8,11 +8,13 @@ require_once('libraries/models/Article.php');
 require_once('libraries/models/Comment.php');
 require_once('libraries/models/Like.php');
 require_once('libraries/models/Dislike.php');
+require_once('libraries/models/Favourite.php');
 
 $articleModel = new Article();
 $commentModel = new Comment();
 $likeArticle = new Like();
 $dislikeArticle = new Dislike();
+$favArticle = new Favourite();
 
 $article_id = null;
 
@@ -22,7 +24,7 @@ if (!empty($_GET['article_id']) && ctype_digit($_GET['article_id'])) {
 }
 
 // Recuperer l'article en question
-$article = $articleModel->findArticle($article_id);
+$article = $articleModel->find($article_id);
 
 
 // Compter le nombre de like
@@ -42,7 +44,7 @@ if (isset($_SESSION['id'])) {
     $check_dislike = $dislikeArticle->check($article_id, $_SESSION['id']);
 
     //Voir si l'article est en favori
-    $checkfav = checkFav($article_id, $_SESSION['id']);
+    $checkfav = $favArticle->check($article_id, $_SESSION['id']);
 
 }
 

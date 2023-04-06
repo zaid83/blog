@@ -3,12 +3,11 @@ session_start();
 
 if ($_SESSION['id']) {
 
-
-    require('libraries/database.php');
     require('libraries/utils.php');
-
-    $pdo = getPdo();
+    require_once('libraries/models/Article.php');
     $message = '';
+
+    $articleModel = new Article();
 
 
     if (isset($_POST["title"]) && isset($_POST["img_article"]) && isset($_POST["content"])) {
@@ -29,7 +28,7 @@ if ($_SESSION['id']) {
                 $message = "L'article fait moins de 200 caractères";
 
             } else {
-                addArticle($title, $img_article, $content, $author);
+                $articleModel->add($title, $img_article, $content, $author);
                 redirect("index.php");
             }
         }

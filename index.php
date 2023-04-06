@@ -6,7 +6,7 @@ require_once('libraries/models/Article.php');
 
 $Article = new Article();
 //SELECT ALL VALID ARTICLES
-$articles = $Article->findAllArticlesValid();
+$articles = $Article->findAllValid();
 
 
 // RENDER PAGE

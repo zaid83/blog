@@ -1,27 +1,28 @@
 <?php
 session_start();
 
-
-require('libraries/database.php');
 require('libraries/utils.php');
+require_once('libraries/models/Article.php');
 
-$pdo = getPdo();
+$articleModel = new Article();
 $sessionid = $_SESSION['id'];
 
 
 // FIND ALL ARTICLES BY USER
-$listarticles = findAllArticlesByUser($sessionid);
+$listarticles = $articleModel->findAllByUser($sessionid);
 
 
 if ($listarticles) {
-$pageTitle = "Mes Articles";
-$subheading = "liste de mes articles";
-$pageTitle2 = "Liste de mes articles";
+    $pageTitle = "Mes Articles";
+    $subheading = "liste de mes articles";
+    $pageTitle2 = "Liste de mes articles";
 
 
-renderHTML('templates/articles/mesArticles.html',
-compact('pageTitle','subheading', 'pageTitle2', 'listarticles'));
+    renderHTML(
+        'templates/articles/mesArticles.html',
+        compact('pageTitle', 'subheading', 'pageTitle2', 'listarticles')
+    );
 
-}else {
-renderHTML('noArticles');
+} else {
+    renderHTML('noArticles');
 }

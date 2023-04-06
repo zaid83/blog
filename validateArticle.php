@@ -4,17 +4,15 @@ session_start();
 
 require('libraries/database.php');
 require('libraries/utils.php');
+require_once('libraries/models/Article.php');
 
-$pdo = getPdo();
-
-$resultats = $pdo->query("SELECT * from articles JOIN users ON users.id = articles.author WHERE valid = 3");
-
-$articles = $resultats->fetchAll();
+$articleModel = new Article();
+$articles = $articleModel->inValidation();
 
 if ($_SESSION['role'] > 1) {
     if (($articles)) {
-
-        renderHTML('templates/articles/validateArticle.html', compact('articles'));
+        $pageTitle = "Validation des articles";
+        renderHTML('templates/articles/validateArticle.html', compact('articles', 'pageTitle'));
 
     } else {
 

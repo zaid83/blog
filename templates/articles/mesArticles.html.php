@@ -53,7 +53,7 @@
           </td>
           <td>
             <?php if (isset($_SESSION['id']) && $_SESSION['role'] > 1) { ?>
-              <a href="editArticle.php?supprime=<?= $listarticle['id_article'] ?>" class="btn btn-danger">Supprimer</a>
+              <a href="delete.php?supprime_article=<?= $listarticle['id_article'] ?>" class="btn btn-danger">Supprimer</a>
             <?php } ?>
           </td>
           <td>

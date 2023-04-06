@@ -1,20 +1,27 @@
 <?php
 
-require('libraries/database.php');
+
 require('libraries/utils.php');
-$pdo = getPdo();
+require_once('libraries/models/Article.php');
+require_once('libraries/models/Comment.php');
+require_once('libraries/models/User.php');
+
+$articleModel = new Article();
+$commentModel = new Comment();
+
 
 if (isset($_GET['supprime_article'])) {
-    deleteElement($_GET['supprime_article'], 'articles', 'id_article');
-    redirect('index.php'); 
+    $articleModel->del($_GET['supprime_article'], "id_article");
+    redirect('index.php');
 }
 
 if (isset($_GET['supprime_coms'])) {
-    deleteElement($_GET['supprime_coms'], 'comments', 'id_comment');
+    $commentModel->del($_GET['supprime_coms'], "id_comment");
     redirect('index.php');
 }
+
 if (isset($_GET['supprime_user'])) {
-    deleteElement($_GET['supprime_user'], 'users', 'id');
+    $userModel->del($_GET['supprime_user'], 'users', 'id');
     redirect('index.php');
 }
 ?>

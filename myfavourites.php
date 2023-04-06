@@ -2,12 +2,14 @@
 session_start();
 
 
-require('libraries/database.php');
-require('libraries/utils.php');
 
-$pdo = getPdo();
+require('libraries/utils.php');
+require_once('libraries/models/Favourite.php');
+
+$favModel = new Favourite();
+
 $sessionid = $_SESSION['id'];
-$articles = findFavourites($sessionid);
+$articles = $favModel->find($sessionid);
 
 
 if ($articles) {

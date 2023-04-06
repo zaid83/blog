@@ -2,19 +2,20 @@
 
 require('libraries/database.php');
 require('libraries/utils.php');
-
-$pdo = getPdo();
+require('libraries/models/User.php');
 session_start();
 
+
+$userModel = new User();
 
 $user_id = $_GET['id'];
 $message = '';
 
 //recuperer le profil à éditer
-$user = findUser($user_id);
+$user = $userModel->find($user_id);
 
 //recuperer les roles
-$allroles = findRoles();
+$allroles = $userModel->findRoles();
 
 
 
@@ -31,8 +32,8 @@ if (isset($_POST["pseudo"]) && isset($_POST["email"]) && isset($_POST["password"
 
         if (!empty($pseudo) || !empty($email) || !empty($password)) {
             if (password_verify($password, $passwordHash)) {
-                updateUser($pseudo, $email, $user_id, $avatar);
-                $user = findUser($user_id);
+                $userModel->update($pseudo, $email, $user_id, $avatar);
+                $user = $userModel->find($user_id);
                 redirect("index.php");
             } else {
                 $message = "Mauvais mot de passe";
@@ -49,8 +50,8 @@ if (isset($_POST["pseudo"]) && isset($_POST["email"]) && isset($_POST["password"
         if (isset($_POST["submitAdmin"])) {
 
             if (!empty($pseudo) || !empty($email)) {
-                updateUserRoles($pseudo, $email, $user_id, $avatar, $role_id);
-                $user = findUser($user_id);
+                $userModel->updateRoles($pseudo, $email, $user_id, $avatar, $role_id);
+                $user = $userModel->find($user_id);
                 redirect("admin.php");
 
             } else {

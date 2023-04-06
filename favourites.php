@@ -1,22 +1,21 @@
 <?php
 
-require('libraries/database.php');
 require('libraries/utils.php');
-
-$pdo = getPdo();
+require_once('libraries/models/Favourite.php');
+$favArticle = new Favourite();
 session_start();
 
 if (isset($_GET['id']) && !empty($_GET['id'])) {
     $getid = (int) $_GET['id'];
     $sessionid = $_SESSION['id'];
-    $checkfav = checkFav($getid, $sessionid);
+    $checkfav = $favArticle->check($getid, $sessionid);
 
     if ($checkfav->rowCount() == 1) {
-        delFavourites($sessionid, $getid);
+        $favArticle->delFav($sessionid, $getid);
         redirect('article.php?article_id=' . $getid);
     } else {
 
-        addFavourites($sessionid, $getid);
+        $favArticle->add($sessionid, $getid);
         redirect('article.php?article_id=' . $getid);
 
     }

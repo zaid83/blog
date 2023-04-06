@@ -4,12 +4,14 @@ require_once('libraries/models/Model.php');
 class Article extends Model
 {
 
+    protected $table = "articles";
+    protected $where = "id_article";
     /**
      * Return all articles
      * @return array
      */
 
-    public function findAllArticles()
+    public function findAll()
     {
 
         $resultats = $this->pdo->query("SELECT * from articles a JOIN states s ON a.valid = s.id_valid ORDER BY date_article DESC");
@@ -25,7 +27,7 @@ class Article extends Model
      * @return array
      */
 
-    public function findAllArticlesValid()
+    public function findAllValid()
     {
 
         $resultats = $this->pdo->query("SELECT * from articles JOIN users ON users.id = articles.author WHERE valid = 1 ORDER BY date_article DESC");
@@ -34,7 +36,13 @@ class Article extends Model
     }
 
 
-    public function findArticle(int $id)
+    /**
+     *  Return one article
+     * @return array
+     */
+
+
+    public function find(int $id)
     {
 
         $resultats = $this->pdo->prepare("SELECT * from articles JOIN users ON users.id = articles.author WHERE id_article = :article_id");
@@ -48,7 +56,7 @@ class Article extends Model
      *
      */
 
-    public function selectArticle(int $id)
+    public function select(int $id)
     {
 
         $resultats = $this->pdo->prepare("SELECT * from articles JOIN users ON users.id = articles.author WHERE id_article = :article_id");
@@ -58,35 +66,12 @@ class Article extends Model
 
 
 
-
-    /**
-     * Count all articles
-     * 
-     */
-
-    public function countAllArticles()
-    {
-
-        $nbArticles = $this->pdo->prepare("SELECT * from articles");
-        $nbArticles->execute();
-        $nbArticles = $nbArticles->rowCount();
-        return $nbArticles;
-    }
-
-    /**
-     *  Return one article
-     * @return array
-     */
-
-
-
-
     /**
      *  Update article
      *
      */
 
-    public function updateArticle($title, $img_article, $content, $article_id)
+    public function update($title, $img_article, $content, $article_id)
     {
 
         $query = $this->pdo->prepare('UPDATE articles SET title = :title, img_article = :img_article, content = :content, date_article = NOW(), valid = 1 WHERE id_article = :article_id ');
@@ -100,7 +85,7 @@ class Article extends Model
      * return list of articles by user
      */
 
-    public function findAllArticlesByUser($userid)
+    public function findAllByUser($userid)
     {
 
         $resultats = $this->pdo->prepare("SELECT * from articles INNER JOIN states s ON s.id_valid = articles.valid  WHERE author = ? ORDER BY date_article DESC");
@@ -112,7 +97,7 @@ class Article extends Model
     /***
      * Add new article
      */
-    public function addArticle($title, $img_article, $content, $author)
+    public function add($title, $img_article, $content, $author)
     {
 
         $query = $this->pdo->prepare('INSERT INTO articles SET title = :title, img_article = :img_article, content = :content, date_article = NOW(), author = :author');
@@ -123,12 +108,19 @@ class Article extends Model
     /***
      * Resend article
      */
-    public function resendArticle($title, $img_article, $content, $article_id, $signal)
+    public function resend($title, $img_article, $content, $article_id, $signal)
     {
 
         $query = $this->pdo->prepare('UPDATE articles SET title = :title, img_article = :img_article, content = :content, date_article = NOW(), valid = 2, Signalements = :signal WHERE id_article = :article_id ');
         $query->execute(compact('title', 'img_article', 'content', 'article_id', 'signal'));
 
+    }
+
+    public function inValidation()
+    {
+        $resultats = $this->pdo->query("SELECT * from articles JOIN users ON users.id = articles.author WHERE valid = 3");
+        $articles = $resultats->fetchAll();
+        return $articles;
     }
 
 
