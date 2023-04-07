@@ -8,19 +8,6 @@ class Comment extends Model
     protected $table = "comments";
     protected $where = "id_comment";
 
-    /***
-     * Find All Comments
-     */
-
-    public function findAll()
-    {
-        $showComs = $this->pdo->prepare("SELECT * from comments c JOIN users u ON u.id = c.id_user JOIN articles a ON a.id_article = c.id_article");
-        $showComs->execute();
-        $listComs = $showComs->fetchAll();
-        return $listComs;
-    }
-
-
 
     /***
      * Add comments

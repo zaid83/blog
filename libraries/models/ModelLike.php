@@ -1,7 +1,7 @@
 <?php
 require_once('libraries/database.php');
 
-class ModelLike
+abstract class ModelLike
 {
     protected $pdo;
     protected $table;

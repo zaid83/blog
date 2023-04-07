@@ -1,5 +1,5 @@
 <div class="container-fluid">
-    <form action="" method="POST" class="register-form">
+    <form action="" method="POST" enctype="multipart/form-data" class="register-form">
         <br>
         <br>
         <br>
@@ -7,7 +7,8 @@
         <br>
         <div class="row">
             <div class="col-md-4 col-sm-4 col-lg-4">
-                <img class="media-object" src="<?= $user['avatar'] ?>" alt="profil" width="80px" height="100px">
+                <img class="media-object" src="public/assets/img/<?= $user['avatar'] ?>" alt="profil" width="80px"
+                    height="100px">
 
             </div>
             <div class="col-8">
@@ -37,11 +38,11 @@
         <div class="row">
             <div class="col-md-4 col-sm-4 col-lg-4">
                 <label for="avatar">AVATAR</label>
-                <input name="avatar" class="form-control" type="text" value="<?= $user['avatar'] ?>">
+                <input name="avatar" class="form-control" type="file">
             </div>
         </div>
         <?php if (isset($_SESSION['id']) && $_SESSION['role'] == 3) { ?>
-            <div class="row">
+            <div class=" row">
                 <div class="col-md-6 col-sm-6 col-lg-6">
 
                     <label for="role">Choisissez votre rôle</label>
@@ -57,7 +58,7 @@
         <?php } ?>
         <hr>
         <div class="row">
-            <?php if (isset($_SESSION['id']) && $_SESSION['role'] < 3) { ?>
+            <?php if (isset($_SESSION['id']) && $_SESSION['role'] <= 2) { ?>
                 <div class="col-md-6 col-sm-6 col-xs-6 col-lg-6">
                     <button class="btn btn-default logbutton" type="submit" name="submit">Mettre à jour</button>
                 </div>

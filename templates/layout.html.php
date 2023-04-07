@@ -20,10 +20,10 @@
         href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800"
         rel="stylesheet" type="text/css" />
     <!-- Core theme CSS (includes Bootstrap)-->
-    <link href="css/styles.css" rel="stylesheet" />
-    <link href="css/register.css" rel="stylesheet" />
-    <link href="css/blog.css" rel="stylesheet" />
-    <link href="css/comments.css" rel="stylesheet">
+    <link href="public/css/styles.css" rel="stylesheet" />
+    <link href="public/css/register.css" rel="stylesheet" />
+    <link href="public/css/blog.css" rel="stylesheet" />
+    <link href="public/css/comments.css" rel="stylesheet">
 </head>
 
 <body>
@@ -35,5 +35,5 @@
     <!-- Bootstrap core JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Core theme JS-->
-    <script src="js/scripts.js"></script>
+    <script src="public/js/scripts.js"></script>
 </body>

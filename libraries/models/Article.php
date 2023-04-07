@@ -6,18 +6,6 @@ class Article extends Model
 
     protected $table = "articles";
     protected $where = "id_article";
-    /**
-     * Return all articles
-     * @return array
-     */
-
-    public function findAll()
-    {
-
-        $resultats = $this->pdo->query("SELECT * from articles a JOIN states s ON a.valid = s.id_valid ORDER BY date_article DESC");
-        $articles = $resultats->fetchAll();
-        return $articles;
-    }
 
 
 

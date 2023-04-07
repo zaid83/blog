@@ -5,18 +5,8 @@ class User extends Model
 {
     protected $table = "users";
     protected $where = "id";
-    /**
-     * Find All Users
-     */
-    public function findAll()
-    {
 
-        $showUsers = $this->pdo->prepare("SELECT * from users INNER JOIN roles r ON r.id_role = users.role_user ORDER BY pseudo ASC");
-        $showUsers->execute();
-        $listusers = $showUsers->fetchAll();
-        return $listusers;
 
-    }
 
 
     public function countAll()
