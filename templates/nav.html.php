@@ -28,10 +28,12 @@
                                 <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="postArticle.php">Nouvel
                                         Article</a>
                                 </li>
-                                <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="mesArticles.php">Mes
+                                <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4"
+                                        href="index.php?controller=article&task=listUser">Mes
                                         Articles</a>
                                 </li>
-                                <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="myfavourites.php">Mes
+                                <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4"
+                                        href="index.php?controller=favourite&task=list">Mes
                                         Favoris</a>
                                 </li>
                                 <?php if (isset($_SESSION['id']) && $_SESSION['role'] > 1) { ?>

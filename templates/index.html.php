@@ -19,7 +19,7 @@
                     <img src="public/assets/img/articles/<?= $article['img_article'] ?>"
                         alt="img de <?= $article['title'] ?> ">
                     <div class="post-content">
-                        <a href="article.php?article_id=<?= $article['id_article'] ?>">
+                        <a href="index.php?controller=article&task=showArticle&article_id=<?= $article['id_article'] ?>">
                             <h2 class="post-title">
                                 <?= $article['title'] ?>
                             </h2>

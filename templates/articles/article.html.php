@@ -21,30 +21,30 @@
                     <?php
                     if (isset($_SESSION['id'])) {
                         if ($check_like->rowCount() == 1) { ?>
-                            <a href="likes.php?type=1&id=<?= $article['id_article'] ?>"><i style="color:red" class="fa fa-heart"
-                                    aria-hidden="true"></i>
+                            <a href="index.php?controller=article&task=likeArticle&type=1&id=<?= $article['id_article'] ?>"><i
+                                    style="color:red" class="fa fa-heart" aria-hidden="true"></i>
                                 J'aime </a>
                         <?php } else { ?>
-                            <a href="likes.php?type=1&id=<?= $article['id_article'] ?>"><i class="fa fa-heart"
-                                    aria-hidden="true"></i>
+                            <a href="index.php?controller=article&task=likeArticle&type=1&id=<?= $article['id_article'] ?>"><i
+                                    class="fa fa-heart" aria-hidden="true"></i>
                                 J'aime </a>
                         <?php } ?>
                         <?php if ($check_dislike->rowCount() == 1) { ?>
-                            <a href="likes.php?type=2&id=<?= $article['id_article'] ?>"><i style="color:blue"
-                                    class="fa fa-thumbs-down" aria-hidden="true"></i>
+                            <a href="index.php?controller=article&task=likeArticle&type=2&id=<?= $article['id_article'] ?>"><i
+                                    style="color:blue" class="fa fa-thumbs-down" aria-hidden="true"></i>
                                 J'aime pas </a>
                         <?php } else { ?>
-                            <a href="likes.php?type=2&id=<?= $article['id_article'] ?>"><i class="fa fa-thumbs-down"
-                                    aria-hidden="true"></i>
+                            <a href="index.php?controller=article&task=likeArticle&type=2&id=<?= $article['id_article'] ?>"><i
+                                    class="fa fa-thumbs-down" aria-hidden="true"></i>
                                 J'aime pas </a>
                         <?php } ?>
                         <?php if ($checkfav->rowCount() == 1) { ?>
-                            <a href="favourites.php?id=<?= $article['id_article'] ?>"><i style="color:red" class="fa fa-minus"
-                                    aria-hidden="true"></i>
+                            <a href="index.php?controller=favourite&task=addOrRemove&id=<?= $article['id_article'] ?>"><i
+                                    style="color:red" class="fa fa-minus" aria-hidden="true"></i>
                                 <span style="color:red">Retirer des favoris</span>
                             <?php } else { ?>
-                                <a href="favourites.php?id=<?= $article['id_article'] ?>"><i style="color:green"
-                                        class="fa fa-plus" aria-hidden="true"></i>
+                                <a href="index.php?controller=favourite&task=addOrRemove&id=<?= $article['id_article'] ?>"><i
+                                        style="color:green" class="fa fa-plus" aria-hidden="true"></i>
                                     <span style="color:green">Ajouter aux favoris</span>
                                 <?php } ?>
 
