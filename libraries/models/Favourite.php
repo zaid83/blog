@@ -1,6 +1,8 @@
 <?php
 
-require_once('libraries/models/Model.php');
+namespace Models;
+
+
 class Favourite extends Model
 {
 
@@ -45,8 +47,7 @@ class Favourite extends Model
 
     public function check(int $article, int $user)
     {
-        $pdo = getPdo();
-        $checkfav = $pdo->prepare('SELECT id_article FROM favourites WHERE id_article = ? AND id_user = ?');
+        $checkfav = $this->pdo->prepare('SELECT id_article FROM favourites WHERE id_article = ? AND id_user = ?');
         $checkfav->execute(array($article, $user));
         return $checkfav;
     }

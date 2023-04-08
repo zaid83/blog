@@ -1,7 +1,7 @@
 <?php
 
-require('libraries/utils.php');
-require_once('libraries/models/User.php');
+require_once('libraries/utils.php');
+require_once('libraries/autoload.php');
 $userModel = new User();
 
 $message = '';

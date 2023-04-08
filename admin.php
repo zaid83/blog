@@ -1,15 +1,13 @@
 <?php
 
 require('libraries/utils.php');
-require_once('libraries/models/Article.php');
-require_once('libraries/models/Comment.php');
-require_once('libraries/models/User.php');
+require_once('libraries/autoload.php');
 
 session_start();
 
-$articleModel = new Article();
-$commentModel = new Comment();
-$userModel = new User();
+$articleModel = new \MODELS\Article();
+$commentModel = new \MODELS\Comment();
+$userModel = new \MODELS\User();
 
 //All articles
 $listarticles = $articleModel->findAll();

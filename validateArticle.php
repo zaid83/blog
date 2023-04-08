@@ -1,10 +1,8 @@
 <?php
 session_start();
 
-
-require('libraries/database.php');
 require('libraries/utils.php');
-require_once('libraries/models/Article.php');
+require_once('libraries/autoload.php');
 
 $articleModel = new Article();
 $articles = $articleModel->inValidation();

@@ -2,7 +2,7 @@
 
 require('libraries/utils.php');
 require_once('libraries/models/Favourite.php');
-$favArticle = new Favourite();
+$favArticle = new \MODELS\Favourite();
 session_start();
 
 if (isset($_GET['id']) && !empty($_GET['id'])) {

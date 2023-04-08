@@ -2,7 +2,7 @@
 session_start();
 
 require('libraries/utils.php');
-require_once('libraries/models/Article.php');
+require_once('libraries/autoload.php');
 
 $articleModel = new Article();
 $sessionid = $_SESSION['id'];

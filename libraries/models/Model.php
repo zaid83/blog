@@ -1,5 +1,6 @@
 <?php
-require_once('libraries/database.php');
+
+namespace Models;
 
 abstract class Model
 {
@@ -10,7 +11,7 @@ abstract class Model
 
     public function __construct()
     {
-        $this->pdo = getPdo();
+        $this->pdo = \Database::getPdo();
     }
 
 

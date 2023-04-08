@@ -1,4 +1,7 @@
 <?php
+
+namespace Models;
+
 require_once('libraries/database.php');
 
 abstract class ModelLike
@@ -8,7 +11,7 @@ abstract class ModelLike
 
     public function __construct()
     {
-        $this->pdo = getPdo();
+        $this->pdo = \Database::getPdo();
     }
 
     /***

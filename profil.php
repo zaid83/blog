@@ -1,7 +1,7 @@
 <?php
 
 require('libraries/utils.php');
-require('libraries/models/User.php');
+require_once('libraries/autoload.php');
 session_start();
 
 

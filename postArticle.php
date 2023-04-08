@@ -3,8 +3,8 @@ session_start();
 
 if ($_SESSION['id']) {
 
-    require('libraries/utils.php');
-    require_once('libraries/models/Article.php');
+    require_once('libraries/utils.php');
+    require_once('libraries/autoload.php');
     $message = '';
 
     $articleModel = new Article();
