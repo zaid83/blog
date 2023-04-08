@@ -12,17 +12,22 @@ $userModel = new User();
 
 
 if (isset($_GET['supprime_article'])) {
+    $articles = $articleModel->find($_GET['supprime_article']);
+    unlink("public/assets/img/articles/" . $articles['img_article'] . "");
     $articleModel->del($_GET['supprime_article']);
+
     redirect('index.php');
 }
 
 if (isset($_GET['supprime_coms'])) {
     $commentModel->del($_GET['supprime_coms']);
-    redirect('index.php');
+    redirect('admin.php');
 }
 
 if (isset($_GET['supprime_user'])) {
+    $user = $userModel->find($_GET['supprime_user']);
+    unlink("public/assets/img/users/" . $user['avatar'] . "");
     $userModel->del($_GET['supprime_user']);
-    redirect('index.php');
+    redirect('admin.php');
 }
 ?>

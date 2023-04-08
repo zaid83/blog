@@ -30,9 +30,10 @@ if (isset($_SESSION['id']) && $_SESSION['role'] > 1) { ?>
             <div class="col-md-10 col-lg-8 col-xl-7">
                 <?php foreach ($articles as $article): ?>
                     <div class="post-preview">
-                        <img src="<?= $article['img_article'] ?>" alt="img article">
+                        <img src="public/assets/img/articles/<?= $article['img_article'] ?>"
+                            alt="image de <?= $article['title'] ?>">
                         <div class="post-content">
-                            <a href="editarticle.php?article_id=<?= $article['id_article'] ?>">
+                            <a href="editarticle.php?validate&article_id=<?= $article['id_article'] ?>">
                                 <h2 class="post-title">
                                     <?= $article['title'] ?>
                                 </h2>

@@ -104,6 +104,14 @@ class Article extends Model
 
     }
 
+    public function edit($title, $img_article, $content, $article_id)
+    {
+
+        $query = $this->pdo->prepare('UPDATE articles SET title = :title, img_article = :img_article, content = :content, date_article = NOW(), valid = 3 WHERE id_article = :article_id ');
+        $query->execute(compact('title', 'img_article', 'content', 'article_id'));
+
+    }
+
     public function inValidation()
     {
         $resultats = $this->pdo->query("SELECT * from articles JOIN users ON users.id = articles.author WHERE valid = 3");

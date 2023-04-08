@@ -7,7 +7,7 @@
         <br>
         <div class="row">
             <div class="col-md-4 col-sm-4 col-lg-4">
-                <img class="media-object" src="public/assets/img/<?= $user['avatar'] ?>" alt="profil" width="80px"
+                <img class="media-object" src="public/assets/img/users/<?= $user['avatar'] ?>" alt="profil" width="80px"
                     height="100px">
 
             </div>

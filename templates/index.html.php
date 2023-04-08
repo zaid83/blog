@@ -16,7 +16,8 @@
             <!-- Post preview-->
             <?php foreach ($articles as $article): ?>
                 <div class="post-preview">
-                    <img src="<?= $article['img_article'] ?>" alt="dragon ball">
+                    <img src="public/assets/img/articles/<?= $article['img_article'] ?>"
+                        alt="img de <?= $article['title'] ?> ">
                     <div class="post-content">
                         <a href="article.php?article_id=<?= $article['id_article'] ?>">
                             <h2 class="post-title">
