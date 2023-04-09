@@ -47,7 +47,7 @@ class Comment extends Controller
     {
         if (isset($_GET['supprime_coms'])) {
             $this->model->del($_GET['supprime_coms']);
-            \Http::redirect('admin.php');
+            \Http::redirect('index.php?controller=user&task=allList');
         }
     }
 }

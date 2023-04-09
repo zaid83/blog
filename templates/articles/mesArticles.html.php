@@ -48,12 +48,14 @@
 
           <td>
             <?php if (isset($_SESSION['id']) && $_SESSION['role'] > 1 || $listarticle['valid'] == 2) { ?>
-              <a href="editArticle.php?article_id=<?= $listarticle['id_article'] ?>" class="btn btn-primary">Editer</a>
+              <a href="index.php?controller=article&task=editArticle&article_id=<?= $listarticle['id_article'] ?>"
+                class="btn btn-primary">Editer</a>
             <?php } ?>
           </td>
           <td>
             <?php if (isset($_SESSION['id']) && $_SESSION['role'] > 1) { ?>
-              <a href="delete.php?supprime_article=<?= $listarticle['id_article'] ?>" class="btn btn-danger">Supprimer</a>
+              <a href="index.php?controller=article&task=delArticle&supprime_article=<?= $listarticle['id_article'] ?>"
+                class="btn btn-danger">Supprimer</a>
             <?php } ?>
           </td>
           <td>

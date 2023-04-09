@@ -30,21 +30,22 @@ if (isset($_SESSION['id']) && $_SESSION['role'] > 1) { ?>
             <div class="col-md-10 col-lg-8 col-xl-7">
                 <?php foreach ($articles as $article): ?>
                     <div class="post-preview">
-                        <img src="public/assets/img/articles/<?= $article['img_article'] ?>"
-                            alt="image de <?= $article['title'] ?>">
+                        <img src="public/assets/img/articles/<?= htmlspecialchars($article['img_article']) ?>"
+                            alt="image de <?= htmlspecialchars($article['title']) ?>">
                         <div class="post-content">
-                            <a href="editarticle.php?validate&article_id=<?= $article['id_article'] ?>">
+                            <a
+                                href="index.php?controller=article&task=editArticle&validate&article_id=<?= htmlspecialchars($article['id_article']) ?>">
                                 <h2 class="post-title">
-                                    <?= $article['title'] ?>
+                                    <?= htmlspecialchars($article['title']) ?>
                                 </h2>
                             </a>
                             <p class="post-meta">
                                 Posté par
                                 <span href="#!">
-                                    <?= $article['pseudo'] ?>
+                                    <?= htmlspecialchars($article['pseudo']) ?>
                                 </span>
                                 le
-                                <?= $article['date_article'] ?>
+                                <?= htmlspecialchars($article['date_article']) ?>
                             </p>
                         </div>
                     </div>

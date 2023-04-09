@@ -7,7 +7,7 @@
             <div class="col-md-4 col-sm-4 col-lg-4">
 
                 <label for="title">TITRE</label>
-                <input name="title" class="form-control" type="text" value="<?= $article['title'] ?>">
+                <input name="title" class="form-control" type="text" value="<?= htmlspecialchars($article['title']) ?>">
             </div>
 
         </div>
@@ -29,22 +29,24 @@
         <div class="row">
             <div class="col-md-12 col-sm-12 col-lg-12">
                 <label for="content">CONTENU</label>
-                <textarea name="content" class="form-control" rows="5" cols="50"><?= $article['content'] ?></textarea>
+                <textarea name="content" class="form-control" rows="5"
+                    cols="50"><?= htmlspecialchars($article['content']) ?></textarea>
             </div>
         </div>
         <br>
         <?php if ($_SESSION['role'] >= 1) {
             if (isset($_GET['validate'])) { ?>
                 <div class="row">
-                    <img src="public/assets/img/articles/<?= $article['img_article'] ?>" alt="image de <?= $article['title'] ?>"
-                        style="width:100px">
+                    <img src="public/assets/img/articles/<?= htmlspecialchars($article['img_article']) ?>"
+                        alt="image de <?= htmlspecialchars($article['title']) ?>" style="width:100px">
                 </div>
-                <input type="hidden" name="img_article" value="<?= $article['img_article'] ?>">
+                <input type="hidden" name="img_article" value="<?= htmlspecialchars($article['img_article']) ?>">
             <?php } ?>
             <hr>
             <div class="row">
                 <div class="col-md-3 col-sm-3 col-xs-3 col-lg-3">
-                    <a class="btn btn-danger " href="delete.php?supprime_article=<?= $article['id_article'] ?>">
+                    <a class="btn btn-danger"
+                        href="index.php?controller=article&task=delArticle&supprime_article=<?= htmlspecialchars($article['id_article']) ?>">
                         Supprimer</a>
                 </div>
 

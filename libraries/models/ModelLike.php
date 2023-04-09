@@ -2,7 +2,6 @@
 
 namespace Models;
 
-require_once('libraries/database.php');
 
 abstract class ModelLike
 {

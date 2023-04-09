@@ -39,30 +39,30 @@
                     <?php foreach ($listarticles as $listarticle): ?>
                         <tr>
                             <th scope="row">
-                                <?= $listarticle['id_article'] ?>
+                                <?= htmlspecialchars($listarticle['id_article']) ?>
                             </th>
                             <td>
-                                <?= $listarticle['title'] ?>
+                                <?= htmlspecialchars($listarticle['title']) ?>
                             </td>
                             <td>
-                                <?= $listarticle['date_article'] ?>
+                                <?= htmlspecialchars($listarticle['date_article']) ?>
                             </td>
 
                             <td>
-                                <a href="editArticle.php?article_id=<?= $listarticle['id_article'] ?>"
+                                <a href="index.php?controller=article&task=editArticle&article_id=<?= htmlspecialchars($listarticle['id_article']) ?>"
                                     class="btn btn-primary">Editer</a>
                             </td>
                             <td>
 
-                                <a href="delete.php?supprime_article=<?= $listarticle['id_article'] ?>"
+                                <a href="index.php?controller=article&task=delArticle&supprime_article=<?= htmlspecialchars($listarticle['id_article']) ?>"
                                     class="btn btn-danger">Supprimer</a>
 
                             </td>
                             <td>
-                                <?= $listarticle['etat'] ?>
+                                <?= htmlspecialchars($listarticle['etat']) ?>
                             </td>
                             <td>
-                                <?= $listarticle['Signalements'] ?>
+                                <?= htmlspecialchars($listarticle['Signalements']) ?>
                             </td>
 
                         </tr>
@@ -94,25 +94,27 @@
                     <?php foreach ($listusers as $listuser): ?>
                         <tr>
                             <th scope="row">
-                                <?= $listuser['id'] ?>
+                                <?= htmlspecialchars($listuser['id']) ?>
                             </th>
                             <td>
-                                <?= $listuser['pseudo'] ?>
+                                <?= htmlspecialchars($listuser['pseudo']) ?>
                             </td>
                             <td>
-                                <?= $listuser['email'] ?>
+                                <?= htmlspecialchars($listuser['email']) ?>
                             </td>
 
                             <td>
-                                <a href="profil.php?id=<?= $listuser['id'] ?>" class="btn btn-primary">Editer</a>
+                                <a href="index.php?controller=user&task=editProfil&id=<?= htmlspecialchars($listuser['id']) ?>"
+                                    class="btn btn-primary">Editer</a>
                             </td>
                             <td>
 
-                                <a href="delete.php?supprime_user=<?= $listuser['id'] ?>" class="btn btn-danger">Supprimer</a>
+                                <a href="index.php?controller=user&task=delUser&supprime_user=<?= htmlspecialchars($listuser['id']) ?>"
+                                    class="btn btn-danger">Supprimer</a>
 
                             </td>
                             <td>
-                                <?= $listuser['nom_role'] ?>
+                                <?= htmlspecialchars($listuser['nom_role']) ?>
                             </td>
 
 
@@ -145,22 +147,22 @@
                     <?php foreach ($listComs as $listCom): ?>
                         <tr>
                             <th scope="row">
-                                <?= $listCom['title'] ?>
+                                <?= htmlspecialchars($listCom['title']) ?>
                             </th>
                             <td>
-                                <?= $listCom['pseudo'] ?>
+                                <?= htmlspecialchars($listCom['pseudo']) ?>
                             </td>
                             <td>
-                                <?= $listCom['comments'] ?>
-                            </td>
-
-                            <td>
-                                <?= $listCom['date_comment'] ?>
+                                <?= htmlspecialchars($listCom['comments']) ?>
                             </td>
 
                             <td>
+                                <?= htmlspecialchars($listCom['date_comment']) ?>
+                            </td>
 
-                                <a href="delete.php?supprime_coms=<?= $listCom['id_comment'] ?>"
+                            <td>
+
+                                <a href="index.php?controller=comment&task=delComment&supprime_coms=<?= htmlspecialchars($listCom['id_comment']) ?>"
                                     class="btn btn-danger">Supprimer</a>
 
                             </td>

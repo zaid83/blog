@@ -10,6 +10,7 @@ class Controller
     public function __construct()
     {
 
+
         if (!empty($_GET['article_id']) && ctype_digit($_GET['article_id'])) {
             $this->article_id = $_GET['article_id'];
         }

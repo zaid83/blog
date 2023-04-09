@@ -31,6 +31,7 @@ class Article extends Controller
         $likeArticle = new \MODELS\Like();
         $dislikeArticle = new \MODELS\Dislike();
         $favArticle = new \MODELS\Favourite();
+        $comArticle = new \CONTROLLERS\Comment();
 
         // Recuperer l'article en question
         $article = $this->model->find($this->article_id);
@@ -65,6 +66,9 @@ class Article extends Controller
             'templates/articles/article.html',
             compact('article', 'likes', 'dislikes', 'check_like', 'check_dislike', 'checkfav', 'pageTitle')
         );
+
+        $comArticle->postComment();
+        $comArticle->renderComment();
 
     }
 
@@ -107,7 +111,7 @@ class Article extends Controller
                         $dislikeArticle->insert($getid, $sessionid);
                     }
                 }
-                \Http::redirect('article.php?article_id=' . $getid);
+                \Http::redirect('index.php?controller=article&task=showArticle&article_id=' . $getid);
             } else {
                 exit('Erreur fatale. <a href="index.php">Revenir à l\'accueil</a>');
             }
@@ -127,6 +131,193 @@ class Article extends Controller
             unlink("public/assets/img/articles/" . $articles['img_article'] . "");
             $this->model->del($_GET['supprime_article']);
             \Http::redirect('index.php');
+        }
+    }
+
+    public function postArticle()
+    {
+        if ($_SESSION['id']) {
+
+            $message = '';
+            $user_id = $_SESSION['id'];
+
+            if (isset($_POST["title"]) && isset($_POST["content"])) {
+
+
+                // post Image
+                $upload = \UploadImg::upload('img_article');
+                extract($upload);
+
+
+                //security
+                $author = $_SESSION['id'];
+                $title = htmlspecialchars($_POST["title"]);
+                $content = htmlspecialchars($_POST["content"]);
+
+
+                if (isset($_POST["submit"])) {
+
+                    if (empty($title) || empty($content)) {
+                        $message = 'Un des champs est vide';
+
+                    } else if (strlen($title) >= 80) {
+                        $message = "Le titre fait plus de 80 caractères";
+                    } else if (strlen($content) <= 200) {
+                        $message = "L'article fait moins de 200 caractères";
+                    } else if (!in_array($extension, $tabExtension) && $size > $tailleMax && $error > 1) {
+                        $message = "L'image est pas valable";
+
+                    } else {
+                        $uniqueName = uniqid('', true);
+                        $file = $uniqueName . "." . $extension;
+                        $img_article = $file;
+                        move_uploaded_file($tmp_name, "public/assets/img/articles/$file");
+
+                        $this->model->add($title, $img_article, $content, $author);
+                        \Http::redirect("index.php");
+                    }
+                }
+            }
+        }
+
+
+
+        $pageTitle = "Poster un article";
+
+        \Renderer::renderHTML("templates/articles/postArticle.html", compact('pageTitle', 'message'));
+
+
+    }
+
+    public function validateArticle()
+    {
+
+        $articles = $this->model->inValidation();
+
+        if ($_SESSION['role'] > 1) {
+            if ($articles) {
+                $pageTitle = "Validation des articles";
+                \Renderer::renderHTML('templates/articles/validateArticle.html', compact('articles', 'pageTitle'));
+
+            } else {
+
+                $error = "Pas d'articles à valider";
+                \Renderer::renderHTML('templates/articles/noArticles.html', compact('error'));
+
+            }
+        } else {
+
+            \Http::redirect('logout.php');
+
+        }
+
+    }
+
+    public function editArticle()
+    {
+
+        $message = '';
+
+        //recuperer l'article à éditer
+        $article = $this->model->find($this->article_id);
+
+        //update l'article 
+        if (isset($_POST["title"]) && isset($_POST["content"])) {
+
+
+            $title = htmlspecialchars($_POST["title"]);
+            $content = htmlspecialchars($_POST["content"]);
+
+
+
+
+            if (isset($_POST["submit"])) {
+
+                // if you are not in Page of Validations
+                if (!isset($_GET['validate'])) {
+                    // post Image
+                    $upload = \UploadImg::upload('img_article');
+                    extract($upload);
+
+                    //if you are a user and want edit your not valid article 
+                    if ($_SESSION['role'] == 1) {
+                        $uniqueName = uniqid('', true);
+                        $file = $uniqueName . "." . $extension;
+                        $img_article = $file;
+                        move_uploaded_file($tmp_name, "public/assets/img/articles/$file");
+                        $this->model->edit($title, $img_article, $content, $this->article_id);
+                        \Http::redirect("index.php?controller=article&task=listUser");
+
+                    } else {
+
+                        if (in_array($extension, $tabExtension) && $size <= $tailleMax && $error == 0) {
+                            $uniqueName = uniqid('', true);
+                            $file = $uniqueName . "." . $extension;
+                            $img_article = $file;
+                            move_uploaded_file($tmp_name, "public/assets/img/articles/$file");
+                            $this->model->update($title, $img_article, $content, $this->article_id);
+                            \Http::redirect("index.php?controller=article&task=listUser");
+                        } else {
+                            $message = 'Veuillez uploadez une image avec une taille inférieure à 4MO';
+                        }
+                    }
+                }
+                // if you are in PAge of Validations
+                else {
+                    $img_article = $_POST['img_article'];
+                    $this->model->update($title, $img_article, $content, $this->article_id);
+                    \Http::redirect("index.php?controller=article&task=validateArticle");
+
+                }
+            }
+
+
+
+            if (isset($_POST["submit3"]) && $_SESSION['role'] > 1 && isset($_GET['validate'])) {
+
+                $img_article = $_POST['img_article'];
+                //renvoyer l'article 
+                $signal = htmlspecialchars($_POST["sign_article"]);
+                $this->model->resend($title, $img_article, $content, $this->article_id, $signal);
+                \Http::redirect("index.php");
+            }
+
+
+
+
+
+        }
+
+
+        $pageTitle = "Publier un Article";
+        \Renderer::renderHTML('templates/articles/editArticle.html', compact('article', 'pageTitle', 'message'));
+
+
+    }
+
+    public function listUser()
+    {
+        $sessionid = $_SESSION['id'];
+
+
+        // FIND ALL ARTICLES BY USER
+        $listarticles = $this->model->findAllByUser($sessionid);
+
+
+        if ($listarticles) {
+            $pageTitle = "Mes Articles";
+            $subheading = "liste de mes articles";
+            $pageTitle2 = "Liste de mes articles";
+
+
+            \Renderer::renderHTML(
+                'templates/articles/mesArticles.html',
+                compact('pageTitle', 'subheading', 'pageTitle2', 'listarticles')
+            );
+
+        } else {
+            $error = "Pas d'articles";
+            \Renderer::renderHTML('templates/articles/noArticles.html', compact('error'));
         }
     }
 }
