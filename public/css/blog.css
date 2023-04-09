@@ -23,7 +23,7 @@ body {
 }
 
 header.masthead {
-    background-image: url('../assets/img/media-1556.jpg');
+    background-image: url('/blog/public/assets/img/media-1556.jpg');
 }
 
 .post-user {

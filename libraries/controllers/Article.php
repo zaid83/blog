@@ -55,7 +55,6 @@ class Article extends Controller
 
             //Voir si l'article est en favori
             $checkfav = $favArticle->check($this->article_id, $_SESSION['id']);
-
         }
 
         $pageTitle = $article['title'];
@@ -69,7 +68,6 @@ class Article extends Controller
 
         $comArticle->postComment();
         $comArticle->renderComment();
-
     }
 
     public function likeArticle()
@@ -111,15 +109,13 @@ class Article extends Controller
                         $dislikeArticle->insert($getid, $sessionid);
                     }
                 }
-                \Http::redirect('index.php?controller=article&task=showArticle&article_id=' . $getid);
+                \Http::redirect("article/showArticle/$getid");
             } else {
                 exit('Erreur fatale. <a href="index.php">Revenir à l\'accueil</a>');
             }
         } else {
             exit('Erreur fatale. <a href="index.php">Revenir à l\'accueil</a>');
         }
-
-
     }
 
 
@@ -159,14 +155,12 @@ class Article extends Controller
 
                     if (empty($title) || empty($content)) {
                         $message = "<span style='color:orange'>Un des champs est vide</span>";
-
                     } else if (strlen($title) >= 80) {
                         $message = "<span style='color:orange'>Le titre fait plus de 80 caractères</span>";
                     } else if (strlen($content) <= 200) {
                         $message = "<span style='color:orange'>L'article fait moins de 200 caractères</span>";
                     } else if (!in_array($extension, $tabExtension) && $size > $tailleMax && $error > 1) {
                         $message = "<span style='color:orange'>L'image est pas valable</span>";
-
                     } else {
                         $uniqueName = uniqid('', true);
                         $file = $uniqueName . "." . $extension;
@@ -186,8 +180,6 @@ class Article extends Controller
         $pageTitle = "Poster un article";
 
         \Renderer::renderHTML("templates/articles/postArticle.html", compact('pageTitle', 'message'));
-
-
     }
 
     public function validateArticle()
@@ -199,19 +191,15 @@ class Article extends Controller
             if ($articles) {
                 $pageTitle = "Validation des articles";
                 \Renderer::renderHTML('templates/articles/validateArticle.html', compact('articles', 'pageTitle'));
-
             } else {
 
                 $error = "Pas d'articles à valider";
                 \Renderer::renderHTML('templates/articles/noArticles.html', compact('error'));
-
             }
         } else {
 
             \Http::redirect('logout.php');
-
         }
-
     }
 
     public function editArticle()
@@ -248,7 +236,6 @@ class Article extends Controller
                         move_uploaded_file($tmp_name, "public/assets/img/articles/$file");
                         $this->model->edit($title, $img_article, $content, $this->article_id);
                         \Http::redirect("index.php?controller=article&task=listUser");
-
                     } else {
 
                         if (in_array($extension, $tabExtension) && $size <= $tailleMax && $error == 0) {
@@ -268,7 +255,6 @@ class Article extends Controller
                     $img_article = $_POST['img_article'];
                     $this->model->update($title, $img_article, $content, $this->article_id);
                     \Http::redirect("index.php?controller=article&task=validateArticle");
-
                 }
             }
 
@@ -282,18 +268,11 @@ class Article extends Controller
                 $this->model->resend($title, $img_article, $content, $this->article_id, $signal);
                 \Http::redirect("index.php");
             }
-
-
-
-
-
         }
 
 
         $pageTitle = "Publier un Article";
         \Renderer::renderHTML('templates/articles/editArticle.html', compact('article', 'pageTitle', 'message'));
-
-
     }
 
     public function listUser()
@@ -315,7 +294,6 @@ class Article extends Controller
                 'templates/articles/mesArticles.html',
                 compact('pageTitle', 'subheading', 'pageTitle2', 'listarticles')
             );
-
         } else {
             $error = "Pas d'articles";
             \Renderer::renderHTML('templates/articles/noArticles.html', compact('error'));

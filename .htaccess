@@ -1,0 +1,10 @@
+# On suit les liens symboliques 
+Options +FollowSymlinks 
+
+RewriteEngine On
+
+RewriteRule ^mangaz$ index.php
+RewriteRule ^([a-z]+)/([a-z-A-Z]+)$ index.php?controller=$1&task=$2
+RewriteRule ^([a-z]+)/([a-z-A-Z]+)/([0-9]+)$ index.php?controller=$1&task=$2&article_id=$3
+
+

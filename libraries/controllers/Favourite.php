@@ -18,12 +18,11 @@ class Favourite extends Controller
 
             if ($checkfav->rowCount() == 1) {
                 $this->model->delFav($sessionid, $getid);
-                \Http::redirect("index.php?controller=article&task=showArticle&article_id=" . $getid);
+                \Http::redirect("article/showArticle/$getid");
             } else {
 
                 $this->model->add($sessionid, $getid);
-                \Http::redirect('index.php?controller=article&task=showArticle&article_id=' . $getid);
-
+                \Http::redirect("article/showArticle/$getid");
             }
         }
     }
@@ -49,7 +48,6 @@ class Favourite extends Controller
                 'templates/articles/myfavourites.html',
                 compact('pageTitle', 'subheading', 'pageTitle2', 'pageFav', 'articles')
             );
-
         } else {
             $error = "Pas de favoris";
             \Renderer::renderHTML('templates/articles/noArticles.html', compact('error'));

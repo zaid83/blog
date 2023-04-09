@@ -9,15 +9,12 @@
                         <fieldset>
                             <div class="row">
                                 <div class="col-sm-3 col-lg-2 hidden-xs">
-                                    <img class="img-responsive" src="public/assets/img/users/<?= $_SESSION['avatar'] ?>"
-                                        alt="img de <?= $_SESSION['pseudo'] ?> ">
+                                    <img class="img-responsive" src="public/assets/img/users/<?= $_SESSION['avatar'] ?>" alt="img de <?= $_SESSION['pseudo'] ?> ">
                                 </div>
                                 <div class="form-group col-xs-12 col-sm-9 col-lg-10">
-                                    <textarea class="form-control" id="message" placeholder="Votre message" required=""
-                                        name="commentaire"></textarea>
+                                    <textarea class="form-control" id="message" placeholder="Votre message" required="" name="commentaire"></textarea>
                                 </div>
-                                <button type="submit" name="submit_commentaire"
-                                    class="btn btn-sm btn-primary pull-right">Envoyer</button>
+                                <button type="submit" name="submit_commentaire" class="btn btn-sm btn-primary pull-right">Envoyer</button>
                             </div>
                         </fieldset>
 
@@ -36,10 +33,9 @@
 
 
 
-                <?php foreach ($comments as $comment): ?>
+                <?php foreach ($comments as $comment) : ?>
                     <div class="media">
-                        <a class="pull-left" href="#"><img class="media-object"
-                                src="public/assets/img/users/<?= $comment['avatar']; ?>" alt=""></a>
+                        <a class="pull-left" href="#"><img class="media-object" src="public/assets/img/users/<?= $comment['avatar']; ?>" alt=""></a>
                         <div class="media-body">
                             <h4 class="media-heading">
                                 <?= $comment['pseudo']; ?>

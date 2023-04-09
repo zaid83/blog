@@ -14,12 +14,11 @@
     <div class="row gx-4 gx-lg-5 ">
         <div class="col-md-10 col-lg-8 col-xl-7">
             <!-- Post preview-->
-            <?php foreach ($articles as $article): ?>
+            <?php foreach ($articles as $article) : ?>
                 <div class="post-preview">
-                    <img src="public/assets/img/articles/<?= $article['img_article'] ?>"
-                        alt="img de <?= $article['title'] ?> ">
+                    <img src="/blog/public/assets/img/articles/<?= $article['img_article'] ?>" alt="img de <?= $article['title'] ?> ">
                     <div class="post-content">
-                        <a href="index.php?controller=article&task=showArticle&article_id=<?= $article['id_article'] ?>">
+                        <a href="article/showArticle/<?= $article['id_article'] ?>">
                             <h2 class="post-title">
                                 <?= $article['title'] ?>
                             </h2>

@@ -7,8 +7,7 @@
         <br>
         <div class="row">
             <div class="col-md-4 col-sm-4 col-lg-4">
-                <img class="media-object" src="public/assets/img/users/<?= $user['avatar'] ?>" alt="profil" width="80px"
-                    height="100px">
+                <img class="media-object" src="public/assets/img/users/<?= $user['avatar'] ?>" alt="profil" width="80px" height="100px">
 
             </div>
             <div class="col-8">
@@ -48,7 +47,7 @@
                     <label for="role">Choisissez votre rôle</label>
 
                     <select name="role" class="form-select" id="role-select">
-                        <?php foreach ($allroles as $allrole): ?>
+                        <?php foreach ($allroles as $allrole) : ?>
                             <option value="<?= $allrole['id_role'] ?>"><?= $allrole['nom_role'] ?></option>
                         <?php endforeach ?>
                     </select>
