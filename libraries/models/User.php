@@ -10,7 +10,9 @@ class User extends Model
 
 
 
-
+    /****
+     * Count All users
+     */
     public function countAll()
     {
 
@@ -81,8 +83,8 @@ class User extends Model
     {
 
         $insert = $this->pdo->prepare("
-INSERT INTO users(pseudo, password, email, token)
-VALUES(:pseudo, :password, :email, :token)");
+         INSERT INTO users(pseudo, password, email, token)
+         VALUES(:pseudo, :password, :email, :token)");
         $insert->bindParam(':pseudo', $pseudo);
         $insert->bindParam(':password', $password);
         $insert->bindParam(':email', $email);
@@ -90,8 +92,6 @@ VALUES(:pseudo, :password, :email, :token)");
         $insert->execute();
 
     }
-
-
 
     /**
      * Sign in User
@@ -108,6 +108,10 @@ VALUES(:pseudo, :password, :email, :token)");
         return $res;
     }
 
+    /****
+     * Check mail or pseudo
+     */
+
     public function check($column, $params)
     {
 
@@ -117,6 +121,10 @@ VALUES(:pseudo, :password, :email, :token)");
         return $res;
     }
 
+    /****
+     * Create a token
+     */
+
     public function insertToken(string $email, string $token)
     {
 
@@ -125,6 +133,9 @@ VALUES(:pseudo, :password, :email, :token)");
         $query->execute(compact('email', 'token'));
     }
 
+    /**
+     * Veriy if Token is valid
+     */
     public function checkTokenValid($token)
     {
         $compare = $this->pdo->prepare('SELECT token_date FROM users WHERE  token = ?');
@@ -133,6 +144,10 @@ VALUES(:pseudo, :password, :email, :token)");
         return $res;
     }
 
+
+    /***
+     * Reset password
+     */
     public function resetPass($token, $password)
     {
         $query = $this->pdo->prepare('UPDATE users SET password = :password, token = "" WHERE token = :token ');

@@ -94,7 +94,6 @@ class Article extends Model
 
         $query = $this->pdo->prepare('INSERT INTO articles SET title = :title, img_article = :img_article, content = :content, date_article = NOW(), author = :author');
         $query->execute(compact('title', 'img_article', 'content', 'author'));
-
     }
 
     /***
@@ -105,7 +104,6 @@ class Article extends Model
 
         $query = $this->pdo->prepare('UPDATE articles SET title = :title, img_article = :img_article, content = :content, date_article = NOW(), valid = 2, Signalements = :signal WHERE id_article = :article_id ');
         $query->execute(compact('title', 'img_article', 'content', 'article_id', 'signal'));
-
     }
 
     public function edit($title, $img_article, $content, $article_id)
@@ -113,7 +111,6 @@ class Article extends Model
 
         $query = $this->pdo->prepare('UPDATE articles SET title = :title, img_article = :img_article, content = :content, date_article = NOW(), valid = 3 WHERE id_article = :article_id ');
         $query->execute(compact('title', 'img_article', 'content', 'article_id'));
-
     }
 
     public function inValidation()
@@ -122,10 +119,4 @@ class Article extends Model
         $articles = $resultats->fetchAll();
         return $articles;
     }
-
-
-
-
-
-
 }

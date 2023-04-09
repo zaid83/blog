@@ -191,15 +191,15 @@ class User extends Controller
 
 
 
-        //update le profil
+        //update profil
         if (isset($_POST["pseudo"]) && isset($_POST["email"]) && isset($_POST["password"])) {
 
 
-            //recupérer une image 
+            //Get image
             $upload = \UploadImg::upload('avatar');
             extract($upload);
 
-            // sécurité
+            // Security
             $pseudo = htmlspecialchars($_POST["pseudo"]);
             $email = htmlspecialchars($_POST["email"]);
             $password = htmlspecialchars($_POST["password"]);

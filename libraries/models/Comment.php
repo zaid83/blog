@@ -46,6 +46,4 @@ class Comment extends Model
         $comments = $resultats->fetchAll();
         return $comments;
     }
-
-
 }
