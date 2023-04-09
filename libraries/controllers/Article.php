@@ -158,14 +158,14 @@ class Article extends Controller
                 if (isset($_POST["submit"])) {
 
                     if (empty($title) || empty($content)) {
-                        $message = 'Un des champs est vide';
+                        $message = "<span style='color:orange'>Un des champs est vide</span>";
 
                     } else if (strlen($title) >= 80) {
-                        $message = "Le titre fait plus de 80 caractères";
+                        $message = "<span style='color:orange'>Le titre fait plus de 80 caractères</span>";
                     } else if (strlen($content) <= 200) {
-                        $message = "L'article fait moins de 200 caractères";
+                        $message = "<span style='color:orange'>L'article fait moins de 200 caractères</span>";
                     } else if (!in_array($extension, $tabExtension) && $size > $tailleMax && $error > 1) {
-                        $message = "L'image est pas valable";
+                        $message = "<span style='color:orange'>L'image est pas valable</span>";
 
                     } else {
                         $uniqueName = uniqid('', true);
@@ -174,7 +174,8 @@ class Article extends Controller
                         move_uploaded_file($tmp_name, "public/assets/img/articles/$file");
 
                         $this->model->add($title, $img_article, $content, $author);
-                        \Http::redirect("index.php");
+                        $message = "<span style='color:lightgreen'>L'artilce est en attente de validation </span>";
+                        //  \Http::redirect("index.php");
                     }
                 }
             }

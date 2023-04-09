@@ -104,7 +104,7 @@ VALUES(:pseudo, :password, :email, :token)");
         $login = $this->pdo->prepare('SELECT * FROM users WHERE email = :email');
         $login->bindValue('email', $email);
         $login->execute();
-        $res = $login->fetch(PDO::FETCH_ASSOC);
+        $res = $login->fetch();
         return $res;
     }
 
@@ -113,8 +113,30 @@ VALUES(:pseudo, :password, :email, :token)");
 
         $compare = $this->pdo->prepare('SELECT ' . $column . ' FROM users WHERE ' . $column . ' = ?');
         $compare->execute([$params]);
-        $res = $compare->fetchAll(PDO::FETCH_ASSOC);
+        $res = $compare->fetchAll();
         return $res;
+    }
+
+    public function insertToken(string $email, string $token)
+    {
+
+
+        $query = $this->pdo->prepare('UPDATE users SET token_date = NOW(), token = :token  WHERE email = :email ');
+        $query->execute(compact('email', 'token'));
+    }
+
+    public function checkTokenValid($token)
+    {
+        $compare = $this->pdo->prepare('SELECT token_date FROM users WHERE  token = ?');
+        $compare->execute([$token]);
+        $res = $compare->fetch();
+        return $res;
+    }
+
+    public function resetPass($token, $password)
+    {
+        $query = $this->pdo->prepare('UPDATE users SET password = :password, token = "" WHERE token = :token ');
+        $query->execute(compact('password', 'token'));
     }
 
 

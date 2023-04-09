@@ -38,6 +38,7 @@
             </div>
 
         </div>
+        <a href="index.php?controller=user&task=forgotP" style='color:white;'>Mot de passe oublié</a>
         <p style='color:white;'>
             <?= $message ?>
         </p>
