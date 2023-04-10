@@ -28,36 +28,29 @@ if (isset($_SESSION['id']) && $_SESSION['role'] > 1) { ?>
     <div class="container px-4 px-lg-5">
         <div class="row gx-4 gx-lg-5 ">
             <div class="col-md-10 col-lg-8 col-xl-7">
-                <?php foreach ($articles as $article): ?>
+                <?php foreach ($articles as $article) : ?>
                     <div class="post-preview">
-                        <img src="<?= $article['img_article'] ?>" alt="img article">
+                        <img src="public/assets/img/articles/<?= htmlspecialchars($article['img_article']) ?>" alt="image de <?= htmlspecialchars($article['title']) ?>">
                         <div class="post-content">
-                            <?php if ($pageFav = false) { ?>
-                                <a href="editarticle.php?article_id=<?= $article['id_article'] ?>">
-                                    <h2 class="post-title">
-                                        <?= $article['title'] ?>
-                                    </h2>
-                                </a>
-                            <?php } else { ?>
-                                <a href="article.php?article_id=<?= $article['id_article'] ?>">
-                                    <h2 class="post-title">
-                                        <?= $article['title'] ?>
-                                    </h2>
-                                </a>
-                            <?php } ?>
+                            <a href="article/editArticle/validate/<?= htmlspecialchars($article['id_article']) ?>">
+
+                                <h2 class="post-title">
+                                    <?= htmlspecialchars($article['title']) ?>
+                                </h2>
+                            </a>
                             <p class="post-meta">
-                                Posted by
-                                <a href="#!">
-                                    <?= $article['pseudo'] ?>
-                                </a>
-                                on
-                                <?= $article['date_article'] ?>
+                                Posté par
+                                <span href="#!">
+                                    <?= htmlspecialchars($article['pseudo']) ?>
+                                </span>
+                                le
+                                <?= htmlspecialchars($article['date_article']) ?>
                             </p>
                         </div>
                     </div>
                     <br>
                 <?php endforeach ?>
             <?php } else {
-    die("Vous n'avez pas les droits");
-}
-?>
+            die("Vous n'avez pas les droits");
+        }
+            ?>

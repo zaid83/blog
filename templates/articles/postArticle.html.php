@@ -1,5 +1,5 @@
 <div class="container-fluid">
-    <form action="postArticle.php" method="POST" class="register-form">
+    <form action="" method="POST" enctype="multipart/form-data" class="register-form">
         <div class="row">
             <h2 style="color:coral;">Poster un article</h2>
             <div class="col-md-4 col-sm-4 col-lg-4">
@@ -11,7 +11,7 @@
         <div class="row">
             <div class="col-md-4 col-sm-4 col-lg-4">
                 <label for="img_article">IMAGE</label>
-                <input name="img_article" class="form-control" type="text">
+                <input name="img_article" class="form-control" type="file">
             </div>
         </div>
         <div class="row">

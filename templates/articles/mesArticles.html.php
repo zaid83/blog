@@ -20,53 +20,55 @@
     <?= $pageTitle2 ?>
   </h2>
   <br>
-  <table class="table">
-    <thead class="thead-dark">
-      <tr>
-        <th scope="col">Articles ID</th>
-        <th scope="col">Titre</th>
-        <th scope="col">Date</th>
-        <th scope="col">Editer</th>
-        <th scope="col">Supprimer</th>
-        <th scope="col">Etat</th>
-        <th scope="col">Signalements</th>
-
-      </tr>
-    </thead>
-    <tbody>
-      <?php foreach ($listarticles as $listarticle): ?>
+  <div class="table-responsive">
+    <table class="table ">
+      <thead class="thead-dark bg-primary">
         <tr>
-          <th scope="row">
-            <?= $listarticle['id_article'] ?>
-          </th>
-          <td>
-            <?= $listarticle['title'] ?>
-          </td>
-          <td>
-            <?= $listarticle['date_article'] ?>
-          </td>
-
-          <td>
-            <?php if (isset($_SESSION['id']) && $_SESSION['role'] > 1 || $listarticle['valid'] == 2) { ?>
-              <a href="editArticle.php?article_id=<?= $listarticle['id_article'] ?>" class="btn btn-primary">Editer</a>
-            <?php } ?>
-          </td>
-          <td>
-            <?php if (isset($_SESSION['id']) && $_SESSION['role'] > 1) { ?>
-              <a href="editArticle.php?supprime=<?= $listarticle['id_article'] ?>" class="btn btn-danger">Supprimer</a>
-            <?php } ?>
-          </td>
-          <td>
-            <?= $listarticle['etat'] ?>
-          </td>
-          <td>
-            <?= $listarticle['Signalements'] ?>
-          </td>
+          <th scope="col">Articles ID</th>
+          <th scope="col">Titre</th>
+          <th scope="col">Date</th>
+          <th scope="col">Editer</th>
+          <th scope="col">Supprimer</th>
+          <th scope="col">Etat</th>
+          <th scope="col">Signals</th>
 
         </tr>
-      <?php endforeach ?>
-    </tbody>
-  </table>
+      </thead>
+      <tbody>
+        <?php foreach ($listarticles as $listarticle) : ?>
+          <tr>
+            <th scope="row">
+              <?= htmlspecialchars($listarticle['id_article']) ?>
+            </th>
+            <td>
+              <?= htmlspecialchars($listarticle['title']) ?>
+            </td>
+            <td>
+              <?= htmlspecialchars($listarticle['date_article']) ?>
+            </td>
+
+            <td>
+              <?php if (isset($_SESSION['id']) && $_SESSION['role'] > 1 || $listarticle['valid'] == 2) { ?>
+                <a href="article/editArticle/<?= htmlspecialchars($listarticle['id_article']) ?>" class="btn btn-primary">Editer</a>
+              <?php } ?>
+            </td>
+            <td>
+              <?php if (isset($_SESSION['id']) && $_SESSION['role'] > 1) { ?>
+                <a href="article/delArticle/<?= htmlspecialchars($listarticle['id_article']) ?>" class="btn btn-danger">Supprimer</a>
+              <?php } ?>
+            </td>
+            <td>
+              <?= htmlspecialchars($listarticle['etat']) ?>
+            </td>
+            <td>
+              <?= htmlspecialchars($listarticle['Signalements']) ?>
+            </td>
+
+          </tr>
+        <?php endforeach ?>
+      </tbody>
+    </table>
+  </div>
 
 <?php }
 ?>
