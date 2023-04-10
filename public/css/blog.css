@@ -50,6 +50,12 @@ header.masthead {
     color: orangered;
 }
 
+#tab-users,
+#tab-coms,
+#tab-articles {
+    display: none;
+}
+
 @media only screen and (max-width: 1200px) {
     .post-preview {
         display: flex;
