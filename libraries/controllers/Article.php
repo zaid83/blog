@@ -99,7 +99,7 @@ class Article extends Controller
 
                     //if like exist
                     if ($check_like->rowCount() == 1) {
-                        $dislikeArticle->del($getid, $sessionid);
+                        $likeArticle->del($getid, $sessionid);
                     } else {
                         $likeArticle->insert($getid, $sessionid);
                     }
