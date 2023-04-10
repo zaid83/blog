@@ -18,3 +18,4 @@ RewriteRule ^([a-z]+)/([a-z-A-Z]+)/([A-Z-a-z-0-9]+)$ index.php?controller=$1&tas
 
 
 
+
