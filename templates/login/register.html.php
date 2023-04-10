@@ -2,6 +2,10 @@
     <form action="" method="POST" class="register-form">
         <div class="row">
             <div class="col-md-4 col-sm-4 col-lg-4">
+                <br>
+                <br>
+                <br>
+                <br>
                 <h2 style="color:coral; text-align:center;">Inscription</h2>
                 <label for="firstName">PSEUDO</label>
                 <input name="pseudo" class="form-control" type="text" value=''>
