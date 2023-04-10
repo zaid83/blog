@@ -10,6 +10,12 @@ class Renderer
         $pageContent = ob_get_clean();
 
         require('templates/layout.html.php');
+    }
 
+    public static function renderError(array $variables = [])
+    {
+        extract($variables);
+
+        require('templates/error.html.php');
     }
 }

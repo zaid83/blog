@@ -17,7 +17,6 @@ class Comment extends Controller
 
                     $this->model->add($user_id, $this->article_id, $commentaire);
                     $msg = "<span style='color:green'>Votre commentaire a bien été posté</span>";
-
                 } else {
                     $msg = "<span style='color:red'>Le commentaire doit faire au moins de 5 caractères </span>";
                 }
@@ -25,9 +24,6 @@ class Comment extends Controller
                 $msg = " <span style='color:red'>Le champs de commentaire est vide </span>";
             }
         }
-
-
-
     }
 
     public function renderComment()
@@ -47,7 +43,7 @@ class Comment extends Controller
     {
         if (isset($_GET['supprime_coms'])) {
             $this->model->del($_GET['supprime_coms']);
-            \Http::redirect('index.php?controller=user&task=allList');
+            \Http::redirect('/blog/user/allList');
         }
     }
 }

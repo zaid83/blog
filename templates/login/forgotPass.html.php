@@ -16,8 +16,7 @@
                 <button class="btn btn-default regbutton" type="submit" name="submitPass">Envoyé le lien</button>
             </div>
             <div class="col-md-6 col-sm-6 col-xs-6 col-lg-6">
-                <button class="btn btn-default logbutton"> <a
-                        href="index.php?controller=user&task=login">Connexion</a></button>
+                <button class="btn btn-default logbutton"> <a href="user/login">Connexion</a></button>
             </div>
         </div>
         <p style='color:white;'>

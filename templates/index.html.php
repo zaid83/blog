@@ -16,20 +16,20 @@
             <!-- Post preview-->
             <?php foreach ($articles as $article) : ?>
                 <div class="post-preview">
-                    <img src="/blog/public/assets/img/articles/<?= $article['img_article'] ?>" alt="img de <?= $article['title'] ?> ">
+                    <img src="/blog/public/assets/img/articles/<?= htmlspecialchars($article['img_article']) ?>" alt="img de <?= htmlspecialchars($article['title']) ?> ">
                     <div class="post-content">
-                        <a href="article/showArticle/<?= $article['id_article'] ?>">
+                        <a href="article/showArticle/<?= htmlspecialchars($article['id_article']) ?>">
                             <h2 class="post-title">
-                                <?= $article['title'] ?>
+                                <?= htmlspecialchars($article['title']) ?>
                             </h2>
                         </a>
                         <p class="post-meta">
                             Posté par
                             <a href="#!">
-                                <?= $article['pseudo'] ?>
+                                <?= htmlspecialchars($article['pseudo']) ?>
                             </a>
                             le
-                            <?= $article['date_article'] ?>
+                            <?= htmlspecialchars($article['date_article']) ?>
                         </p>
                     </div>
                 </div>
@@ -37,9 +37,7 @@
             <?php endforeach ?>
 
             <hr class="my-4" />
-            <!-- Pager-->
-            <div class="d-flex justify-content-end mb-4"><a class="btn btn-primary text-uppercase" href="#!">Anciens
-                    articles →</a></div>
+
         </div>
     </div>
 </div>

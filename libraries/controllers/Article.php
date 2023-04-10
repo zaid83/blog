@@ -36,38 +36,43 @@ class Article extends Controller
         // Recuperer l'article en question
         $article = $this->model->find($this->article_id);
 
+        if (!$article) {
+            $errorPage = "404";
+            \Renderer::renderError(compact('errorPage'));
+        } else {
 
-        // Compter le nombre de like
-        $likes = $likeArticle->count($this->article_id);
+            // Compter le nombre de like
+            $likes = $likeArticle->count($this->article_id);
 
-        //Compter le nombre de dislikes
-        $dislikes = $dislikeArticle->count($this->article_id);
-        $check_like = '';
-        $check_dislike = '';
-        $checkfav = '';
+            //Compter le nombre de dislikes
+            $dislikes = $dislikeArticle->count($this->article_id);
+            $check_like = '';
+            $check_dislike = '';
+            $checkfav = '';
 
-        if (isset($_SESSION['id'])) {
-            //Voir si l'article est liké
-            $check_like = $likeArticle->check($this->article_id, $_SESSION['id']);
+            if (isset($_SESSION['id'])) {
+                //Voir si l'article est liké
+                $check_like = $likeArticle->check($this->article_id, $_SESSION['id']);
 
-            //Voir si l'article est non liké
-            $check_dislike = $dislikeArticle->check($this->article_id, $_SESSION['id']);
+                //Voir si l'article est non liké
+                $check_dislike = $dislikeArticle->check($this->article_id, $_SESSION['id']);
 
-            //Voir si l'article est en favori
-            $checkfav = $favArticle->check($this->article_id, $_SESSION['id']);
+                //Voir si l'article est en favori
+                $checkfav = $favArticle->check($this->article_id, $_SESSION['id']);
+            }
+
+            $pageTitle = $article['title'];
+
+
+
+            \Renderer::renderHTML(
+                'templates/articles/article.html',
+                compact('article', 'likes', 'dislikes', 'check_like', 'check_dislike', 'checkfav', 'pageTitle')
+            );
+
+            $comArticle->postComment();
+            $comArticle->renderComment();
         }
-
-        $pageTitle = $article['title'];
-
-
-
-        \Renderer::renderHTML(
-            'templates/articles/article.html',
-            compact('article', 'likes', 'dislikes', 'check_like', 'check_dislike', 'checkfav', 'pageTitle')
-        );
-
-        $comArticle->postComment();
-        $comArticle->renderComment();
     }
 
     public function likeArticle()
@@ -126,7 +131,7 @@ class Article extends Controller
             $articles = $this->model->find($_GET['supprime_article']);
             unlink("public/assets/img/articles/" . $articles['img_article'] . "");
             $this->model->del($_GET['supprime_article']);
-            \Http::redirect('index.php');
+            \Http::redirect('/blog/index.php');
         }
     }
 
@@ -185,6 +190,7 @@ class Article extends Controller
     public function validateArticle()
     {
 
+
         $articles = $this->model->inValidation();
 
         if ($_SESSION['role'] > 1) {
@@ -198,7 +204,7 @@ class Article extends Controller
             }
         } else {
 
-            \Http::redirect('logout.php');
+            \Http::redirect('/blog/user/logout');
         }
     }
 
@@ -207,8 +213,10 @@ class Article extends Controller
 
         $message = '';
 
-        //recuperer l'article à éditer
+        //Get article
         $article = $this->model->find($this->article_id);
+
+
 
         //update l'article 
         if (isset($_POST["title"]) && isset($_POST["content"])) {
@@ -235,7 +243,7 @@ class Article extends Controller
                         $img_article = $file;
                         move_uploaded_file($tmp_name, "public/assets/img/articles/$file");
                         $this->model->edit($title, $img_article, $content, $this->article_id);
-                        \Http::redirect("index.php?controller=article&task=listUser");
+                        \Http::redirect("article/listUser");
                     } else {
 
                         if (in_array($extension, $tabExtension) && $size <= $tailleMax && $error == 0) {
@@ -244,7 +252,7 @@ class Article extends Controller
                             $img_article = $file;
                             move_uploaded_file($tmp_name, "public/assets/img/articles/$file");
                             $this->model->update($title, $img_article, $content, $this->article_id);
-                            \Http::redirect("index.php?controller=article&task=listUser");
+                            \Http::redirect("article/listUser");
                         } else {
                             $message = 'Veuillez uploadez une image avec une taille inférieure à 4MO';
                         }
@@ -254,7 +262,7 @@ class Article extends Controller
                 else {
                     $img_article = $_POST['img_article'];
                     $this->model->update($title, $img_article, $content, $this->article_id);
-                    \Http::redirect("index.php?controller=article&task=validateArticle");
+                    \Http::redirect("/blog/article/validateArticle");
                 }
             }
 
@@ -266,7 +274,7 @@ class Article extends Controller
                 //renvoyer l'article 
                 $signal = htmlspecialchars($_POST["sign_article"]);
                 $this->model->resend($title, $img_article, $content, $this->article_id, $signal);
-                \Http::redirect("index.php");
+                \Http::redirect("/blog/index.php");
             }
         }
 
@@ -288,6 +296,7 @@ class Article extends Controller
             $pageTitle = "Mes Articles";
             $subheading = "liste de mes articles";
             $pageTitle2 = "Liste de mes articles";
+
 
 
             \Renderer::renderHTML(

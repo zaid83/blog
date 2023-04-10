@@ -16,14 +16,14 @@
         <hr>
         <div class="row">
             <div class="col-md-6 col-sm-6 col-xs-6 col-lg-6">
-                <button class="btn btn-default regbutton" type="submit"><a href="index.php?controller=user&task=register">Inscription</a></button>
+                <button class="btn btn-default regbutton" type="submit"><a href="user/register">Inscription</a></button>
 
             </div>
             <div class="col-md-6 col-sm-6 col-xs-6 col-lg-6">
                 <button class="btn btn-default logbutton" type="submit">Se connecter</button>
             </div>
         </div>
-        <a href="index.php?controller=user&task=forgotP" style='color:white;'>Mot de passe oublié</a>
+        <a href="user/forgotP" style='color:white;'>Mot de passe oublié</a>
         <p style='color:white;'>
             <?= $message ?>
         </p>

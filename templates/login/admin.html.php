@@ -36,7 +36,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($listarticles as $listarticle): ?>
+                    <?php foreach ($listarticles as $listarticle) : ?>
                         <tr>
                             <th scope="row">
                                 <?= htmlspecialchars($listarticle['id_article']) ?>
@@ -49,13 +49,11 @@
                             </td>
 
                             <td>
-                                <a href="index.php?controller=article&task=editArticle&article_id=<?= htmlspecialchars($listarticle['id_article']) ?>"
-                                    class="btn btn-primary">Editer</a>
+                                <a href="article/editArticle/<?= htmlspecialchars($listarticle['id_article']) ?>" class="btn btn-primary">Editer</a>
                             </td>
                             <td>
 
-                                <a href="index.php?controller=article&task=delArticle&supprime_article=<?= htmlspecialchars($listarticle['id_article']) ?>"
-                                    class="btn btn-danger">Supprimer</a>
+                                <a href="article/delArticle/<?= htmlspecialchars($listarticle['id_article']) ?>" class="btn btn-danger">Supprimer</a>
 
                             </td>
                             <td>
@@ -91,7 +89,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($listusers as $listuser): ?>
+                    <?php foreach ($listusers as $listuser) : ?>
                         <tr>
                             <th scope="row">
                                 <?= htmlspecialchars($listuser['id']) ?>
@@ -104,13 +102,11 @@
                             </td>
 
                             <td>
-                                <a href="index.php?controller=user&task=editProfil&id=<?= htmlspecialchars($listuser['id']) ?>"
-                                    class="btn btn-primary">Editer</a>
+                                <a href="user/editProfil/<?= htmlspecialchars($listuser['id']) ?>" class="btn btn-primary">Editer</a>
                             </td>
                             <td>
 
-                                <a href="index.php?controller=user&task=delUser&supprime_user=<?= htmlspecialchars($listuser['id']) ?>"
-                                    class="btn btn-danger">Supprimer</a>
+                                <a href="user/delUser/<?= htmlspecialchars($listuser['id']) ?>" class="btn btn-danger">Supprimer</a>
 
                             </td>
                             <td>
@@ -144,7 +140,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($listComs as $listCom): ?>
+                    <?php foreach ($listComs as $listCom) : ?>
                         <tr>
                             <th scope="row">
                                 <?= htmlspecialchars($listCom['title']) ?>
@@ -162,8 +158,7 @@
 
                             <td>
 
-                                <a href="index.php?controller=comment&task=delComment&supprime_coms=<?= htmlspecialchars($listCom['id_comment']) ?>"
-                                    class="btn btn-danger">Supprimer</a>
+                                <a href="comment/delComment/<?= htmlspecialchars($listCom['id_comment']) ?>" class="btn btn-danger">Supprimer</a>
 
                             </td>
 

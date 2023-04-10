@@ -53,7 +53,7 @@ class User extends Controller
             $user = $this->model->find($_GET['supprime_user']);
             unlink("public/assets/img/users/" . $user['avatar'] . "");
             $this->model->del($_GET['supprime_user']);
-            \Http::redirect('index.php?controller=user&task=allList');
+            \Http::redirect('/blog/user/allList');
         }
     }
 
@@ -61,7 +61,7 @@ class User extends Controller
     {
         $_SESSION = array();
         session_destroy();
-        \Http::redirect('index.php?controller=user&task=login');
+        \Http::redirect('/blog/user/login');
     }
 
     public function login()
@@ -88,7 +88,7 @@ class User extends Controller
                     $_SESSION['role'] = $res['role_user'];
 
 
-                    \Http::redirect('index.php');
+                    \Http::redirect('/blog/mangaz');
                 } else {
                     $message = "Mot de passe invalide";
                 }
@@ -104,7 +104,6 @@ class User extends Controller
             'templates/login/login.html',
             compact('message', 'pageTitle')
         );
-
     }
 
     public function register()
@@ -163,9 +162,7 @@ class User extends Controller
                     $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
                     $this->model->add($pseudo, $password, $email, $token);
                     \Http::redirect("index.php?controller=user&task=login");
-
                 }
-
             }
         }
 
@@ -179,98 +176,106 @@ class User extends Controller
 
     public function editProfil()
     {
-        $user_id = $_GET['id'];
-        $message = '';
+        if ($_SESSION['id'] != $_GET['id'] && $_SESSION['role'] < 3) {
 
-        //recuperer le profil à éditer
-        $user = $this->model->find($user_id);
+            $pageTitle = "Page erreur";
+            $errorPage = "403";
 
-        //recuperer les roles
-        $allroles = $this->model->findRoles();
+            \Renderer::renderError(
+                compact('pageTitle', 'errorPage')
+            );
+        } else {
+            $user_id = $_GET['id'];
+            $message = '';
 
+            //Get profile
+            $user = $this->model->find($user_id);
+            if (!$user) {
+                $pageTitle = "Page erreur";
+                $errorPage = "404";
 
-
-
-        //update profil
-        if (isset($_POST["pseudo"]) && isset($_POST["email"]) && isset($_POST["password"])) {
-
-
-            //Get image
-            $upload = \UploadImg::upload('avatar');
-            extract($upload);
-
-            // Security
-            $pseudo = htmlspecialchars($_POST["pseudo"]);
-            $email = htmlspecialchars($_POST["email"]);
-            $password = htmlspecialchars($_POST["password"]);
-
-
-
-
-            if (isset($_POST["submit"]) && $_SESSION['role'] < 3) {
-                $passwordHash = $user['password'];
-
-                if (!empty($pseudo) || !empty($email) || !empty($password)) {
-                    if (password_verify($password, $passwordHash)) {
-
-
-                        if (in_array($extension, $tabExtension) && $size <= $tailleMax && $error == 0) {
-                            $file = $user_id . "." . $extension;
-                            $avatar = $file;
-                            move_uploaded_file($tmp_name, "public/assets/img/users/$file");
-
-                            $this->model->update($pseudo, $email, $user_id, $avatar);
-                            if ($_SESSION['id'] == $_GET['id']) {
-                                $user = $this->model->find($user_id);
-                                $_SESSION['id'] = $user['id'];
-                                $_SESSION['avatar'] = $user['avatar'];
-                                $_SESSION['pseudo'] = $user['pseudo'];
-                                $_SESSION['email'] = $user['email'];
-                            }
-                            \Http::redirect("index.php");
-                        } else {
-                            $message = 'Veuillez uploadez une image avec une taille inférieure à 4MO';
-                        }
-                    } else {
-                        $message = "Mauvais mot de passe";
-
-                    }
-                } else {
-                    $message = "Un des champs est vide";
-
-                }
+                \Renderer::renderError(
+                    compact('pageTitle', 'errorPage')
+                );
             } else {
 
-                $role_id = $_POST["role"];
-                if (isset($_POST["submitAdmin"])) {
+                //Get roles
+                $allroles = $this->model->findRoles();
 
-                    if (!empty($pseudo) || !empty($email)) {
-                        if (in_array($extension, $tabExtension) && $size <= $tailleMax && $error == 0) {
-                            $file = $user_id . "." . $extension;
-                            $avatar = $file;
-                            move_uploaded_file($tmp_name, "public/assets/img/users/$file");
-                            $this->model->updateRoles($pseudo, $email, $user_id, $avatar, $role_id);
-                            $user = $this->model->find($user_id);
-                            \Http::redirect("index.php?controller=user&task=allList");
+                //update profile
+                if (isset($_POST["pseudo"]) && isset($_POST["email"]) && isset($_POST["password"])) {
+
+
+                    //Get image
+                    $upload = \UploadImg::upload('avatar');
+                    extract($upload);
+
+                    // Security
+                    $pseudo = htmlspecialchars($_POST["pseudo"]);
+                    $email = htmlspecialchars($_POST["email"]);
+                    $password = htmlspecialchars($_POST["password"]);
+
+
+
+
+                    if (isset($_POST["submit"]) && $_SESSION['role'] < 3) {
+                        $passwordHash = $user['password'];
+
+                        if (!empty($pseudo) || !empty($email) || !empty($password)) {
+                            if (password_verify($password, $passwordHash)) {
+
+
+                                if (in_array($extension, $tabExtension) && $size <= $tailleMax && $error == 0) {
+                                    $file = $user_id . "." . $extension;
+                                    $avatar = $file;
+                                    move_uploaded_file($tmp_name, "public/assets/img/users/$file");
+
+                                    $this->model->update($pseudo, $email, $user_id, $avatar);
+                                    if ($_SESSION['id'] == $_GET['id']) {
+                                        $user = $this->model->find($user_id);
+
+                                        $_SESSION['pseudo'] = $user['pseudo'];
+                                    }
+                                    \Http::redirect("/blog/mangaz");
+                                } else {
+                                    $message = 'Veuillez uploadez une image avec une taille inférieure à 4MO';
+                                }
+                            } else {
+                                $message = "Mauvais mot de passe";
+                            }
                         } else {
-                            $message = 'Veuillez uploadez une image avec une taille inférieure à 4MO';
+                            $message = "Un des champs est vide";
                         }
-
                     } else {
-                        $message = "Un des champs est vide";
+
+                        $role_id = $_POST["role"];
+                        if (isset($_POST["submitAdmin"])) {
+
+                            if (!empty($pseudo) || !empty($email)) {
+                                if (in_array($extension, $tabExtension) && $size <= $tailleMax && $error == 0) {
+                                    $file = $user_id . "." . $extension;
+                                    $avatar = $file;
+                                    move_uploaded_file($tmp_name, "public/assets/img/users/$file");
+                                    $this->model->updateRoles($pseudo, $email, $user_id, $avatar, $role_id);
+                                    $user = $this->model->find($user_id);
+                                    \Http::redirect("/blog/user/allList");
+                                } else {
+                                    $message = 'Veuillez uploadez une image avec une taille inférieure à 4MO';
+                                }
+                            } else {
+                                $message = "Un des champs est vide";
+                            }
+                        }
                     }
                 }
+
+                $pageTitle = "Profil";
+                \Renderer::renderHTML(
+                    'templates/login/profil.html',
+                    compact('pageTitle', 'user', 'message', 'allroles')
+                );
             }
         }
-
-
-
-
-        $pageTitle = "Profil";
-        \Renderer::renderHTML(
-            'templates/login/profil.html',
-            compact('pageTitle', 'user', 'message', 'allroles')
-        );
     }
 
     public function forgotP()
@@ -315,15 +320,10 @@ class User extends Controller
                     //send a mail
                     mail($to, $subject, $mess, implode("\r\n", $headers));
                     $message = "<span style='color:lightgreen'>Un lien vous a été envoyé à votre adresse email</span>";
-
-
                 } else {
                     $message = "<span style='color:orange'>L'adresse email n'existe pas dans la bdd</span>";
                 }
-
-
             }
-
         }
 
         $pageTitle = "Mot de passe oublié";
@@ -379,14 +379,11 @@ class User extends Controller
                 $this->model->resetPass($token, $password);
 
                 $message = "<span style='color:lightgreen'>Votre mot de passe a été mis a jour</span>";
-
             }
-
         }
 
         $pageTitle = "Renouveller mot de passe";
 
         \Renderer::renderHTML('templates/login/resetPass.html', compact("pageTitle", "message"));
     }
-
 }

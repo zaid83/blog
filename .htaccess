@@ -4,7 +4,17 @@ Options +FollowSymlinks
 RewriteEngine On
 
 RewriteRule ^mangaz$ index.php
+
+RewriteRule ^article/delArticle/([0-9]+)$ index.php?controller=article&task=delArticle&supprime_article=$1
+RewriteRule ^comment/delComment/([0-9]+)$ index.php?controller=comment&task=delComment&supprime_coms=$1
+RewriteRule ^user/delUser/([0-9]+)$ index.php?controller=user&task=delUser&supprime_user=$1
 RewriteRule ^([a-z]+)/([a-z-A-Z]+)$ index.php?controller=$1&task=$2
+RewriteRule ^user/([a-z-A-Z]+)/([0-9]+)$ index.php?controller=user&task=$1&id=$2
+RewriteRule ^article/([a-z-A-Z]+)/validate/([0-9]+)$ index.php?controller=article&task=$1&validate&article_id=$2
 RewriteRule ^([a-z]+)/([a-z-A-Z]+)/([0-9]+)$ index.php?controller=$1&task=$2&article_id=$3
+RewriteRule ^([a-z]+)/([a-z-A-Z]+)/([A-Z-a-z-0-9]+)$ index.php?controller=$1&task=$2&token=$3
+
+
+
 
 
