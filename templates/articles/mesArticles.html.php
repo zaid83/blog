@@ -35,7 +35,27 @@
         </tr>
       </thead>
       <tbody>
-        <?php foreach ($listarticles as $listarticle) : ?>
+        <?php foreach ($listarticles as $listarticle): ?>
+          <!-- Modal -->
+          <div class="modal fade" id="articleModal<?= $listarticle['id_article'] ?>" tabindex="1"
+            aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Suppresion</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  Voulez-vous vraiment supprimer ?
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                  <button type="button" class="btn btn-danger"> <a
+                      href="article/delArticle/<?= $listarticle['id_article'] ?>">Supprimer</a></button>
+                </div>
+              </div>
+            </div>
+          </div>
           <tr>
             <th scope="row">
               <?= htmlspecialchars($listarticle['id_article']) ?>
@@ -49,12 +69,16 @@
 
             <td>
               <?php if (isset($_SESSION['id']) && $_SESSION['role'] > 1 || $listarticle['valid'] == 2) { ?>
-                <a href="article/editArticle/<?= htmlspecialchars($listarticle['id_article']) ?>" class="btn btn-primary">Editer</a>
+                <a href="article/editArticle/<?= htmlspecialchars($listarticle['id_article']) ?>"
+                  class="btn btn-primary">Editer</a>
               <?php } ?>
             </td>
             <td>
               <?php if (isset($_SESSION['id']) && $_SESSION['role'] > 1) { ?>
-                <a href="article/delArticle/<?= htmlspecialchars($listarticle['id_article']) ?>" class="btn btn-danger">Supprimer</a>
+                <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                  data-bs-target="#articleModal<?= $listarticle['id_article'] ?>">
+                  Supprimer
+                </button>
               <?php } ?>
             </td>
             <td>

@@ -29,38 +29,74 @@
         <div class="row">
             <div class="col-md-12 col-sm-12 col-lg-12">
                 <label for="content">CONTENU</label>
-                <textarea name="content" class="form-control" rows="5" cols="50"><?= htmlspecialchars($article['content']) ?></textarea>
+                <textarea name="content" class="form-control" rows="5"
+                    cols="50"><?= htmlspecialchars($article['content']) ?></textarea>
             </div>
         </div>
         <br>
         <?php if ($_SESSION['role'] >= 1) {
+
+
+
             if (isset($_GET['validate'])) { ?>
                 <div class="row">
-                    <img src="public/assets/img/articles/<?= htmlspecialchars($article['img_article']) ?>" alt="image de <?= htmlspecialchars($article['title']) ?>" style="width:100px">
+                    <img src="public/assets/img/articles/<?= htmlspecialchars($article['img_article']) ?>"
+                        alt="image de <?= htmlspecialchars($article['title']) ?>" style="width:100px">
                 </div>
                 <input type="hidden" name="img_article" value="<?= htmlspecialchars($article['img_article']) ?>">
             <?php } ?>
             <hr>
             <div class="row">
+
+
                 <div class="col-md-3 col-sm-3 col-xs-3 col-lg-3">
-                    <a class="btn btn-danger" href="index.php?controller=article&task=delArticle&supprime_article=<?= htmlspecialchars($article['id_article']) ?>">
-                        Supprimer</a>
+                    <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                        data-bs-target="#articleModal<?= $article['id_article'] ?>">
+                        Supprimer
+                    </button>
                 </div>
+
+
 
                 <div class="col-md-3 col-sm-3 col-xs-3 col-lg-3">
                     <button class="btn btn-primary " type="submit" name="submit">Publier</button>
                 </div>
+
+
                 <?php if (isset($_GET['validate'])) { ?>
                     <div class="col-md-3 col-sm-3 col-xs-3 col-lg-3">
                         <button class="btn btn-secondary " type="submit" name="submit3">Renvoyer</button>
                     </div>
-                <?php } ?>
 
-            <?php } ?>
+
+                <?php }
+        } ?>
+
+
             <p style='color:white;'>
                 <?= $message; ?>
 
             </p>
-            </div>
+        </div>
     </form>
+</div>
+
+
+<div class="modal" id="articleModal<?= $article['id_article'] ?>">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Suppresion</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Voulez-vous vraiment supprimer ?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                <button type="button" class="btn btn-danger"> <a
+                        href="article/delArticle/<?= $listarticle['id_article'] ?>">Supprimer</a></button>
+            </div>
+        </div>
+    </div>
 </div>
