@@ -16,8 +16,9 @@ abstract class Model
 
 
 
-    /***
+    /**
      * List all articles, comments or users
+     * @return array
      */
 
     public function findAll()
@@ -47,7 +48,7 @@ abstract class Model
         $del->execute([$supprime]);
     }
 
-    /** *
+    /** 
      * NB Comments,articles or users
      */
 

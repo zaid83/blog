@@ -28,9 +28,10 @@ if (isset($_SESSION['id']) && $_SESSION['role'] > 1) { ?>
     <div class="container px-4 px-lg-5">
         <div class="row gx-4 gx-lg-5 ">
             <div class="col-md-10 col-lg-8 col-xl-7">
-                <?php foreach ($articles as $article) : ?>
+                <?php foreach ($articles as $article): ?>
                     <div class="post-preview">
-                        <img src="public/assets/img/articles/<?= htmlspecialchars($article['img_article']) ?>" alt="image de <?= htmlspecialchars($article['title']) ?>">
+                        <img src="public/assets/img/articles/<?= htmlspecialchars($article['img_article']) ?>"
+                            alt="image de <?= htmlspecialchars($article['title']) ?>">
                         <div class="post-content">
                             <a href="article/editArticle/validate/<?= htmlspecialchars($article['id_article']) ?>">
 
@@ -40,7 +41,7 @@ if (isset($_SESSION['id']) && $_SESSION['role'] > 1) { ?>
                             </a>
                             <p class="post-meta">
                                 Posté par
-                                <span href="#!">
+                                <span class="post-user">
                                     <?= htmlspecialchars($article['pseudo']) ?>
                                 </span>
                                 le
@@ -51,6 +52,6 @@ if (isset($_SESSION['id']) && $_SESSION['role'] > 1) { ?>
                     <br>
                 <?php endforeach ?>
             <?php } else {
-            die("Vous n'avez pas les droits");
-        }
-            ?>
+    die("Vous n'avez pas les droits");
+}
+?>

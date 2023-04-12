@@ -198,9 +198,9 @@ class Article extends Controller
                 $pageTitle = "Validation des articles";
                 \Renderer::renderHTML('templates/articles/validateArticle.html', compact('articles', 'pageTitle'));
             } else {
-
+                $pageTitle = "Validation des articles";
                 $error = "Pas d'articles à valider";
-                \Renderer::renderHTML('templates/articles/noArticles.html', compact('error'));
+                \Renderer::renderHTML('templates/articles/noArticles.html', compact('error', 'pageTitle'));
             }
         } else {
 

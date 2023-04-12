@@ -13,11 +13,12 @@ abstract class ModelLike
         $this->pdo = \Database::getPdo();
     }
 
-    /***
-     * Verifiy if is was dislike or like
+    /**
+     *Verifiy if is was dislike or like
+     *@return bool
      */
 
-    public function check($article, $user)
+    public function check(int $article, int $user)
     {
         $check = $this->pdo->prepare("SELECT id_article FROM {$this->table} WHERE id_article = ? AND id_user = ?");
         $check->execute(array($article, $user));
@@ -30,7 +31,7 @@ abstract class ModelLike
      *@return int
      */
 
-    public function count($id)
+    public function count(int $id)
     {
         $count = $this->pdo->prepare("SELECT id_article FROM {$this->table} WHERE id_article = ?");
         $count->execute([$id]);
@@ -41,6 +42,7 @@ abstract class ModelLike
 
     /**
      * Insert Likes or Dislikes
+     * @return void
      */
     public function insert(int $article, int $user)
     {
@@ -53,7 +55,7 @@ abstract class ModelLike
 
     /**
      * Delete likes or dislikes
-     * 
+     * @return void
      */
     public function del(int $article, int $user)
     {

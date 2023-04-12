@@ -10,8 +10,9 @@ class User extends Model
 
 
 
-    /****
+    /**
      * Count All users
+     * @return int
      */
     public function countAll()
     {
@@ -27,6 +28,7 @@ class User extends Model
 
     /**
      * Select User to Edit
+     * 
      */
     public function find($iduser)
     {
@@ -39,6 +41,7 @@ class User extends Model
 
     /**
      * Update User
+     * @return void
      */
 
     public function update($pseudo, $email, $user_id, $avatar)
@@ -50,6 +53,7 @@ class User extends Model
 
     /**
      * Update User with roles
+     *@return void
      */
 
     public function updateRoles($pseudo, $email, $user_id, $avatar, $role_id)
@@ -76,7 +80,7 @@ class User extends Model
 
     /**
      * Sign up User
-     * 
+     * @return void
      */
 
     public function add(string $pseudo, string $password, string $email, string $token): void
@@ -108,7 +112,7 @@ class User extends Model
         return $res;
     }
 
-    /****
+    /**
      * Check mail or pseudo
      */
 
@@ -121,8 +125,9 @@ class User extends Model
         return $res;
     }
 
-    /****
+    /**
      * Create a token
+     *@return void
      */
 
     public function insertToken(string $email, string $token)
@@ -145,8 +150,9 @@ class User extends Model
     }
 
 
-    /***
+    /**
      * Reset password
+     * @return void
      */
     public function resetPass($token, $password)
     {

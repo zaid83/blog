@@ -60,10 +60,10 @@ class Article extends Model
 
     /**
      *  Update article
-     *
+     *@return void
      */
 
-    public function update($title, $img_article, $content, $article_id)
+    public function update(string $title, string $img_article, string $content, int $article_id)
     {
 
         $query = $this->pdo->prepare('UPDATE articles SET title = :title, img_article = :img_article, content = :content, date_article = NOW(), valid = 1 WHERE id_article = :article_id ');
@@ -73,11 +73,12 @@ class Article extends Model
 
 
 
-    /***
+    /**
      * return list of articles by user
+     * @return array
      */
 
-    public function findAllByUser($userid)
+    public function findAllByUser(int $userid)
     {
 
         $resultats = $this->pdo->prepare("SELECT * from articles INNER JOIN states s ON s.id_valid = articles.valid  WHERE author = ? ORDER BY date_article DESC");
@@ -86,33 +87,44 @@ class Article extends Model
         return $listarticles;
     }
 
-    /***
+    /**
      * Add new article
+     * @return void
      */
-    public function add($title, $img_article, $content, $author)
+    public function add(string $title, string $img_article, string $content, string $author)
     {
 
         $query = $this->pdo->prepare('INSERT INTO articles SET title = :title, img_article = :img_article, content = :content, date_article = NOW(), author = :author');
         $query->execute(compact('title', 'img_article', 'content', 'author'));
     }
 
-    /***
+    /**
      * Resend article
+     * @return void
      */
-    public function resend($title, $img_article, $content, $article_id, $signal)
+    public function resend(string $title, string $img_article, string $content, int $article_id, string $signal)
     {
 
         $query = $this->pdo->prepare('UPDATE articles SET title = :title, img_article = :img_article, content = :content, date_article = NOW(), valid = 2, Signalements = :signal WHERE id_article = :article_id ');
         $query->execute(compact('title', 'img_article', 'content', 'article_id', 'signal'));
     }
 
-    public function edit($title, $img_article, $content, $article_id)
+
+    /**
+     * Edit article
+     * @return void
+     */
+    public function edit(string $title, string $img_article, string $content, int $article_id)
     {
 
         $query = $this->pdo->prepare('UPDATE articles SET title = :title, img_article = :img_article, content = :content, date_article = NOW(), valid = 3 WHERE id_article = :article_id ');
         $query->execute(compact('title', 'img_article', 'content', 'article_id'));
     }
 
+    /**
+     * Find articles in validation
+     * 
+     */
     public function inValidation()
     {
         $resultats = $this->pdo->query("SELECT * from articles JOIN users ON users.id = articles.author WHERE valid = 3");

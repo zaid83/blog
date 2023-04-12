@@ -2,7 +2,6 @@
 
 namespace Models;
 
-require_once('libraries/models/ModelLike.php');
 
 class Like extends ModelLike
 {

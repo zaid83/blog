@@ -26,9 +26,9 @@
                         </a>
                         <p class="post-meta">
                             Posté par
-                            <a href="#!">
+                            <span class="post-user">
                                 <?= htmlspecialchars($article['pseudo']) ?>
-                            </a>
+                            </span>
                             le
                             <?= htmlspecialchars($article['date_article']) ?>
                         </p>

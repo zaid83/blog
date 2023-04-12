@@ -11,8 +11,9 @@ class Comment extends Model
     protected $where = "id_comment";
 
 
-    /***
+    /**
      * Add comments
+     * @return void
      */
 
     public function add(int $user, int $article, string $comments): void
@@ -21,7 +22,7 @@ class Comment extends Model
         $ins->execute(array($user, $article, $comments));
     }
 
-    /***
+    /**
      * Count comments by article
      *@return int
      */
@@ -34,7 +35,7 @@ class Comment extends Model
         return $nbcomments;
     }
 
-    /***
+    /**
      * Render comments by article
      *@return array
      */
