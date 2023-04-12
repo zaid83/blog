@@ -243,7 +243,7 @@ class Article extends Controller
                         $img_article = $file;
                         move_uploaded_file($tmp_name, "public/assets/img/articles/$file");
                         $this->model->edit($title, $img_article, $content, $this->article_id);
-                        \Http::redirect("article/listUser");
+                        \Http::redirect("/blog/article/listUser");
                     } else {
 
                         if (in_array($extension, $tabExtension) && $size <= $tailleMax && $error == 0) {
@@ -252,13 +252,13 @@ class Article extends Controller
                             $img_article = $file;
                             move_uploaded_file($tmp_name, "public/assets/img/articles/$file");
                             $this->model->update($title, $img_article, $content, $this->article_id);
-                            \Http::redirect("article/listUser");
+                            \Http::redirect("/blog/article/listUser");
                         } else {
                             $message = 'Veuillez uploadez une image avec une taille inférieure à 4MO';
                         }
                     }
                 }
-                // if you are in PAge of Validations
+                // if you are in Page of Validations
                 else {
                     $img_article = $_POST['img_article'];
                     $this->model->update($title, $img_article, $content, $this->article_id);

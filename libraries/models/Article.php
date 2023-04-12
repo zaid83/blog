@@ -66,7 +66,7 @@ class Article extends Model
     public function update(string $title, string $img_article, string $content, int $article_id)
     {
 
-        $query = $this->pdo->prepare('UPDATE articles SET title = :title, img_article = :img_article, content = :content, date_article = NOW(), valid = 1 WHERE id_article = :article_id ');
+        $query = $this->pdo->prepare("UPDATE articles SET title = :title, img_article = :img_article, Signalements = '',  content = :content, date_article = NOW(), valid = 1 WHERE id_article = :article_id ");
         $query->execute(compact('title', 'img_article', 'content', 'article_id'));
     }
 
@@ -117,7 +117,7 @@ class Article extends Model
     public function edit(string $title, string $img_article, string $content, int $article_id)
     {
 
-        $query = $this->pdo->prepare('UPDATE articles SET title = :title, img_article = :img_article, content = :content, date_article = NOW(), valid = 3 WHERE id_article = :article_id ');
+        $query = $this->pdo->prepare("UPDATE articles SET title = :title, img_article = :img_article, content = :content, date_article = NOW(), valid = 3  WHERE id_article = :article_id ");
         $query->execute(compact('title', 'img_article', 'content', 'article_id'));
     }
 
