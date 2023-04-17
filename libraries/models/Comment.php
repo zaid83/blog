@@ -47,4 +47,11 @@ class Comment extends Model
         $comments = $resultats->fetchAll();
         return $comments;
     }
+
+    public function delCommentById(int $id_comment){
+
+            $del = $this->pdo->prepare("DELETE FROM  comments WHERE id_comment = ?");
+            $del->execute([$id_comment]);
+   
+    }
 }

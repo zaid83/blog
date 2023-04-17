@@ -51,6 +51,9 @@
                                 <?= $comment['date_comment']; ?>
                             </li>
                         </ul>
+                        <?php if($_SESSION['id'] == $comment['id_user']) { ?>
+                        <button class="btn btn-danger"><a href="index.php?controller=comment&task=delCommentById&supprime_coms=<?= $comment['id_comment'] ?>">Supprimer </a></button>
+                        <?php } ?>
                     </div>
                 <?php endforeach ?>
 

@@ -46,4 +46,13 @@ class Comment extends Controller
             \Http::redirect('/blog/user/allList');
         }
     }
+
+    public function delCommentByID(){
+
+        if (isset($_GET['supprime_coms']))  {
+            $this->model->delCommentByID($_GET['supprime_coms']);
+            \Http::redirect('/blog/index.php');
+            
+        }
+    }
 }
