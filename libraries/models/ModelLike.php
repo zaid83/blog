@@ -15,7 +15,7 @@ abstract class ModelLike
 
     /**
      *Verifiy if is was dislike or like
-     *@return bool
+     *
      */
 
     public function check(int $article, int $user)
@@ -63,6 +63,4 @@ abstract class ModelLike
         $del = $this->pdo->prepare("DELETE FROM {$this->table} WHERE id_article = ? AND id_user = ?");
         $del->execute(array($article, $user));
     }
-
-
 }
